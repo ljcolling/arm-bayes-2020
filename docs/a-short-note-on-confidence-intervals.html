@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 A short note on confidence intervals | A Minimal Book Example</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 A short note on confidence intervals | A Minimal Book Example" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 A short note on confidence intervals | A Minimal Book Example" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Yihui Xie" />
+
+
+<meta name="date" content="2020-04-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="the-p-value.html"/>
+<link rel="next" href="criticisms-of-p-values.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="the-p-value.html"><a href="the-p-value.html"><i class="fa fa-check"></i><b>3</b> The <em>p</em> value</a><ul>
+<li class="chapter" data-level="3.1" data-path="the-p-value.html"><a href="the-p-value.html#probability"><i class="fa fa-check"></i><b>3.1</b> Probability</a></li>
+<li class="chapter" data-level="3.2" data-path="the-p-value.html"><a href="the-p-value.html#probability-and-p-values"><i class="fa fa-check"></i><b>3.2</b> Probability and <em>p</em> values</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="the-p-value.html"><a href="the-p-value.html#understanding-the-p-through-simulation"><i class="fa fa-check"></i><b>3.2.1</b> Understanding the <em>p</em> through simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="the-p-value.html"><a href="the-p-value.html#interim-summary"><i class="fa fa-check"></i><b>3.3</b> Interim summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="a-short-note-on-confidence-intervals.html"><a href="a-short-note-on-confidence-intervals.html"><i class="fa fa-check"></i><b>4</b> A short note on confidence intervals</a></li>
+<li class="chapter" data-level="5" data-path="criticisms-of-p-values.html"><a href="criticisms-of-p-values.html"><i class="fa fa-check"></i><b>5</b> Criticisms of <em>p</em> values</a><ul>
+<li class="chapter" data-level="5.1" data-path="criticisms-of-p-values.html"><a href="criticisms-of-p-values.html#same-measurements-from-different-devices"><i class="fa fa-check"></i><b>5.1</b> Same measurements from different devices</a></li>
+<li class="chapter" data-level="5.2" data-path="criticisms-of-p-values.html"><a href="criticisms-of-p-values.html#the-universe-of-possible-events"><i class="fa fa-check"></i><b>5.2</b> The universe of possible events</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="the-evidential-alternative-to-p-values.html"><a href="the-evidential-alternative-to-p-values.html"><i class="fa fa-check"></i><b>6</b> The evidential alternative to <em>p</em> values</a><ul>
+<li class="chapter" data-level="6.1" data-path="the-evidential-alternative-to-p-values.html"><a href="the-evidential-alternative-to-p-values.html#a-theory-of-statistical-evidence"><i class="fa fa-check"></i><b>6.1</b> A theory of statistical evidence</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="the-evidential-alternative-to-p-values.html"><a href="the-evidential-alternative-to-p-values.html#some-features-of-likelihoods"><i class="fa fa-check"></i><b>6.1.1</b> Some features of likelihoods</a></li>
+<li class="chapter" data-level="6.1.2" data-path="the-evidential-alternative-to-p-values.html"><a href="the-evidential-alternative-to-p-values.html#likelihoods-and-statistical-evidence"><i class="fa fa-check"></i><b>6.1.2</b> Likelihoods and statistical evidence</a></li>
+<li class="chapter" data-level="6.1.3" data-path="the-evidential-alternative-to-p-values.html"><a href="the-evidential-alternative-to-p-values.html#are-all-sub-hypotheses-equal"><i class="fa fa-check"></i><b>6.1.3</b> Are all sub-hypotheses equal?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="bayes-rule.html"><a href="bayes-rule.html"><i class="fa fa-check"></i><b>7</b> Bayes rule</a><ul>
+<li class="chapter" data-level="7.1" data-path="bayes-rule.html"><a href="bayes-rule.html#what-is-bayes-rule"><i class="fa fa-check"></i><b>7.1</b> What is Bayes rule</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="bayes-rule.html"><a href="bayes-rule.html#conditional-probability-form"><i class="fa fa-check"></i><b>7.1.1</b> Conditional probability form</a></li>
+<li class="chapter" data-level="7.1.2" data-path="bayes-rule.html"><a href="bayes-rule.html#proportional-form"><i class="fa fa-check"></i><b>7.1.2</b> Proportional form</a></li>
+<li class="chapter" data-level="7.1.3" data-path="bayes-rule.html"><a href="bayes-rule.html#ratio-form"><i class="fa fa-check"></i><b>7.1.3</b> Ratio form</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="bayes-rule.html"><a href="bayes-rule.html#bayes-factor"><i class="fa fa-check"></i><b>7.2</b> Bayes factor</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="choosing-priors-part-i.html"><a href="choosing-priors-part-i.html"><i class="fa fa-check"></i><b>8</b> Choosing priors Part I</a><ul>
+<li class="chapter" data-level="8.1" data-path="choosing-priors-part-i.html"><a href="choosing-priors-part-i.html#priors-with-specific-mathematical-properties"><i class="fa fa-check"></i><b>8.1</b> Priors with specific mathematical properties</a></li>
+<li class="chapter" data-level="8.2" data-path="choosing-priors-part-i.html"><a href="choosing-priors-part-i.html#priors-that-reflect-ignorance"><i class="fa fa-check"></i><b>8.2</b> Priors that reflect ignorance</a></li>
+<li class="chapter" data-level="8.3" data-path="choosing-priors-part-i.html"><a href="choosing-priors-part-i.html#priors-that-reflect-our-beliefs-about-the-world."><i class="fa fa-check"></i><b>8.3</b> Priors that reflect our beliefs about the world.</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="computing-bayes-factors-part-i.html"><a href="computing-bayes-factors-part-i.html"><i class="fa fa-check"></i><b>9</b> Computing Bayes factors Part I</a><ul>
+<li class="chapter" data-level="9.1" data-path="computing-bayes-factors-part-i.html"><a href="computing-bayes-factors-part-i.html#priors-on-effect-sizes"><i class="fa fa-check"></i><b>9.1</b> Priors on effect sizes</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="computing-bayes-factors-part-ii.html"><a href="computing-bayes-factors-part-ii.html"><i class="fa fa-check"></i><b>10</b> Computing Bayes factors Part II</a><ul>
+<li class="chapter" data-level="10.1" data-path="computing-bayes-factors-part-ii.html"><a href="computing-bayes-factors-part-ii.html#priors-on-raw-effects"><i class="fa fa-check"></i><b>10.1</b> Priors on raw effects</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Minimal Book Example</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="a-short-note-on-confidence-intervals" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> A short note on confidence intervals</h1>
+<p>I’ll mention confidence intervals only briefly, but they follow the <em>exact</em> same logic as <em>p</em>-values. Let say I collect some measurements, work out the average. I could scale this value with my scaling factor and then turn to my list of results from the pretend experiments to work out my <em>p</em> value. However, I can also use the results from the pretend experiments to construct (the very poorly named) confidence interval.</p>
+<p>Looking at my pretend experiments I would see that any scaled values that are more than about 2.23 <em>t</em> units from 0 would be surprising. Using this information, I can ask myself the following question: If my device on average pointed at the current sample average, rather than zero, what data values would be surprising? The answer to this is, of course, values that are more than 2.23 <em>t</em> units from the sample mean. Having an answer in <em>t</em> units isn’t very useful. But I know that I converted measurements to <em>t</em> units by scaling readings using the scaling factor <span class="math inline">\(s_{\bar{x}}\)</span>. This means we can just un-scale the value in <em>t</em> units back into raw units using the scaling factor calculated from my sample. This means I can say that any values <span class="math inline">\(\pm 2.23\cdot{}s_{\bar{x}}\)</span> from the sample mean would be surprising. Any values less than this, or in this range, would be unsurprising if my device, on average, pointed at my current sample mean. I could draw a line through these values, pull little tails on this line, and <em>hey presto</em> I have a confidence interval.</p>
+<p>Now just to be clear, just like a <em>p</em> value, a confidence interval tells you what values would be surprising/unsurprising on an assumption of a certain value of the parameter. For the <em>p</em> value you set the parameter to 0 (or wherever else the device points when no treasure is around). For the confidence interval, I just set the parameter to the value from my current sample. It’s exactly the same idea.</p>
+<p>Hopefully, this should make it clear what the confidence interval doesn’t tell you. It doesn’t tell you about the <em>probability of a parameter falling within a range</em> (the common misinterpretation). It tells you <em>frequency with which data from pretend experiments will fall within a particular range on the assumption that the parameter is equal to the observed value</em>. At no point are we making inferences about <strong>parameters</strong> or <strong>true values</strong> of parameters. We are holding parameters constant, doing pretend experiments, and then judging whether the data we have at hand is surprising or not <em>in relation to those pretend experiments</em>.</p>
+<p>Now that we’re all on the same page about <em>p</em> values and confidence intervals, we’re aware of their power, and where they get this power from, let’s look at some criticisms of <em>p</em> values.</p>
+
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="a-short-note-on-confidence-intervals.html#cb25-1"></a>bayesplay<span class="op">::</span><span class="kw">loadpackages</span>()</span></code></pre></div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="the-p-value.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="criticisms-of-p-values.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["book.pdf", "book.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

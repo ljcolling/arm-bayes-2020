@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Bayes rule | Bayesian Data Analysis</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Bayes rule | Bayesian Data Analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Bayes rule | Bayesian Data Analysis" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Lincoln Colling" />
+
+
+<meta name="date" content="2020-04-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="the-evidential-alternative-to-p-values.html"/>
+<link rel="next" href="choosing-priors-part-i.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bayesian Data Analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prerequisites</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#introduction"><i class="fa fa-check"></i>Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="the-p-value.html"><a href="the-p-value.html"><i class="fa fa-check"></i><b>1</b> The <em>p</em> value</a><ul>
+<li class="chapter" data-level="1.1" data-path="the-p-value.html"><a href="the-p-value.html#probability"><i class="fa fa-check"></i><b>1.1</b> Probability</a></li>
+<li class="chapter" data-level="1.2" data-path="the-p-value.html"><a href="the-p-value.html#probability-and-p-values"><i class="fa fa-check"></i><b>1.2</b> Probability and <em>p</em> values</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="the-p-value.html"><a href="the-p-value.html#understanding-the-p-through-simulation"><i class="fa fa-check"></i><b>1.2.1</b> Understanding the <em>p</em> through simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="the-p-value.html"><a href="the-p-value.html#interim-summary"><i class="fa fa-check"></i><b>1.3</b> Interim summary</a></li>
+<li class="chapter" data-level="1.4" data-path="the-p-value.html"><a href="the-p-value.html#a-short-note-on-confidence-intervals"><i class="fa fa-check"></i><b>1.4</b> A short note on confidence intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="criticisms-of-p-values.html"><a href="criticisms-of-p-values.html"><i class="fa fa-check"></i><b>2</b> Criticisms of <em>p</em> values</a><ul>
+<li class="chapter" data-level="2.1" data-path="criticisms-of-p-values.html"><a href="criticisms-of-p-values.html#same-measurements-from-different-devices"><i class="fa fa-check"></i><b>2.1</b> Same measurements from different devices</a></li>
+<li class="chapter" data-level="2.2" data-path="criticisms-of-p-values.html"><a href="criticisms-of-p-values.html#the-universe-of-possible-events"><i class="fa fa-check"></i><b>2.2</b> The universe of possible events</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="the-evidential-alternative-to-p-values.html"><a href="the-evidential-alternative-to-p-values.html"><i class="fa fa-check"></i><b>3</b> The evidential alternative to <em>p</em> values</a><ul>
+<li class="chapter" data-level="3.1" data-path="the-evidential-alternative-to-p-values.html"><a href="the-evidential-alternative-to-p-values.html#a-theory-of-statistical-evidence"><i class="fa fa-check"></i><b>3.1</b> A theory of statistical evidence</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="the-evidential-alternative-to-p-values.html"><a href="the-evidential-alternative-to-p-values.html#some-features-of-likelihoods"><i class="fa fa-check"></i><b>3.1.1</b> Some features of likelihoods</a></li>
+<li class="chapter" data-level="3.1.2" data-path="the-evidential-alternative-to-p-values.html"><a href="the-evidential-alternative-to-p-values.html#likelihoods-and-statistical-evidence"><i class="fa fa-check"></i><b>3.1.2</b> Likelihoods and statistical evidence</a></li>
+<li class="chapter" data-level="3.1.3" data-path="the-evidential-alternative-to-p-values.html"><a href="the-evidential-alternative-to-p-values.html#are-all-sub-hypotheses-equal"><i class="fa fa-check"></i><b>3.1.3</b> Are all sub-hypotheses equal?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bayes-rule.html"><a href="bayes-rule.html"><i class="fa fa-check"></i><b>4</b> Bayes rule</a><ul>
+<li class="chapter" data-level="4.1" data-path="bayes-rule.html"><a href="bayes-rule.html#what-is-bayes-rule"><i class="fa fa-check"></i><b>4.1</b> What is Bayes rule</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="bayes-rule.html"><a href="bayes-rule.html#conditional-probability-form"><i class="fa fa-check"></i><b>4.1.1</b> Conditional probability form</a></li>
+<li class="chapter" data-level="4.1.2" data-path="bayes-rule.html"><a href="bayes-rule.html#proportional-form"><i class="fa fa-check"></i><b>4.1.2</b> Proportional form</a></li>
+<li class="chapter" data-level="4.1.3" data-path="bayes-rule.html"><a href="bayes-rule.html#ratio-form"><i class="fa fa-check"></i><b>4.1.3</b> Ratio form</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="bayes-rule.html"><a href="bayes-rule.html#bayes-factor"><i class="fa fa-check"></i><b>4.2</b> Bayes factor</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="choosing-priors-part-i.html"><a href="choosing-priors-part-i.html"><i class="fa fa-check"></i><b>5</b> Choosing priors Part I</a><ul>
+<li class="chapter" data-level="5.1" data-path="choosing-priors-part-i.html"><a href="choosing-priors-part-i.html#priors-with-specific-mathematical-properties"><i class="fa fa-check"></i><b>5.1</b> Priors with specific mathematical properties</a></li>
+<li class="chapter" data-level="5.2" data-path="choosing-priors-part-i.html"><a href="choosing-priors-part-i.html#priors-that-reflect-ignorance"><i class="fa fa-check"></i><b>5.2</b> Priors that reflect ignorance</a></li>
+<li class="chapter" data-level="5.3" data-path="choosing-priors-part-i.html"><a href="choosing-priors-part-i.html#priors-that-reflect-our-beliefs-about-the-world."><i class="fa fa-check"></i><b>5.3</b> Priors that reflect our beliefs about the world.</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="computing-bayes-factors-part-i.html"><a href="computing-bayes-factors-part-i.html"><i class="fa fa-check"></i><b>6</b> Computing Bayes factors Part I</a><ul>
+<li class="chapter" data-level="6.1" data-path="computing-bayes-factors-part-i.html"><a href="computing-bayes-factors-part-i.html#priors-on-effect-sizes"><i class="fa fa-check"></i><b>6.1</b> Priors on effect sizes</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="computing-bayes-factors-part-ii.html"><a href="computing-bayes-factors-part-ii.html"><i class="fa fa-check"></i><b>7</b> Computing Bayes factors Part II</a><ul>
+<li class="chapter" data-level="7.1" data-path="computing-bayes-factors-part-ii.html"><a href="computing-bayes-factors-part-ii.html#priors-on-raw-effects"><i class="fa fa-check"></i><b>7.1</b> Priors on raw effects</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/ljcolling/notebooks" target="blank">View on GitHub</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian Data Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bayes-rule" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Bayes rule</h1>
+<p>I’ve left talking about Bayes rule until now, because I think you can understand the concept of the Bayes factor without it, and because I wanted to emphasise the idea that the Bayes factor is a ratio of <strong>two weighted averages</strong>. However, now that we have this simple understanding, I’m hoping to deepen your understanding a bit by introducing Bayes rule. This deeper understanding of Bayes rule will also help use understand some of the topic we’ll cover later in the course.</p>
+<div id="what-is-bayes-rule" class="section level2">
+<h2><span class="header-section-number">4.1</span> What is Bayes rule</h2>
+<p>Bayes rule follows straightforwardly from the axioms of conditional probability. In this sense, there’s nothing particularly “Bayesian” about it in that both Frequentists and Bayesians can, and do, make use of the concept of conditional probability.</p>
+<div id="conditional-probability-form" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Conditional probability form</h3>
+<p>When you encounter Bayes rule in a frequentist context, it often takes the following form:</p>
+<p><span class="math display">\[p(A|B) = \frac{p(B|A)p(A)}{p(B)}\]</span></p>
+<p>or</p>
+<p><span class="math display">\[p(A|B) = \frac{p(B|A)p(A)}{p(B|A)p(A) + p(B|\neg{}A)p(\neg{}A)}\]</span></p>
+<p>In this form, it typically explained by way of an example usually involving some kind of a test. In classic examples, the context if <em>often</em> a test for a rare disease. It is then shown that Bayes rule can be used to calculate the probability that the <strong>positive</strong> test indicates the <strong>presence</strong> of the disease [p(disease present| positive test)], by taking into account the <strong>sensitivity</strong> of the test [p(positive test | disease present)], the prevalence of the disease [p(disease)], and the probability of the test returning a positive result irrespective of the presence of the disease [p(positive)].</p>
+<p>Bayes rule presented in this form is useful for thinking about evidence. The left side of the equation - <span class="math inline">\(\frac{p(B|A)p(A)}{p(B)}\)</span> - or more specifically, part of it - <span class="math inline">\(\frac{p(B|A)}{p(B)}\)</span> - can be read as representing the <strong>evidence</strong> the test provides or the presence of the disease. This <strong>evidence</strong> is then <strong>weighted</strong> by the <strong>base rate</strong> or the prior probability of the disease being present.</p>
+</div>
+<div id="proportional-form" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> Proportional form</h3>
+<p>In the context of Bayesian inference, it is often given in a slightly different form:</p>
+<p><span class="math display">\[p(A|B) \propto{} P(B|A) \cdot{} P(A)\]</span></p>
+<p>or</p>
+<p><span class="math display">\[p(\theta|Y) \propto{} \mathcal{L}(\theta|Y) \cdot{}p(\theta)\]</span></p>
+<p>In this form it is usually read as “the posterior probability is proportional to the likelihood times the prior”. The proportional form drops the denominator, which for a continuous parameter is given as:</p>
+<p><span class="math display">\[p(Y) = \int_\Theta p(Y|\theta)p(\theta)d(\theta)\]</span></p>
+<p>Integrals are generally difficult to work out, so they’re often best avoided! We’ll see in the section on parameter estimation that while it’s not always possible to work out the posterior, we can just <strong>draw samples from it</strong> without needing to solve the integral.</p>
+</div>
+<div id="ratio-form" class="section level3">
+<h3><span class="header-section-number">4.1.3</span> Ratio form</h3>
+<p>Both of these forms, however, obscure the relationship between <strong>Bayes</strong> and <strong>prediction</strong>.</p>
+<p>Following <a href="https://doi.org/10.1080/00031305.2017.1341334">Rouder and Morey (2019)</a>, I think it’s useful to present Bayes rule in the ratio form:</p>
+<p><span class="math display">\[\frac{\pi(\theta|Y)}{\pi({\theta})}=\frac{p(Y|\theta)}{p(Y)}\]</span></p>
+<p>The ratio form relates our “beliefs” about parameters <span class="math inline">\(\frac{\pi(\theta|Y)}{\pi({\theta})}\)</span> to probabilities about data <span class="math inline">\(\frac{p(Y|\theta)}{p(Y)}\)</span>. Or put another way, it relates <strong>beliefs</strong> and <strong>evidence</strong> to <strong>predictions</strong>. To understand how this is the case, we’ll examine the example given by <a href="https://doi.org/10.1080/00031305.2017.1341334">Rouder and Morey (2019)</a>.</p>
+<p>To explore this formula we’ll first have to set two things. First, we’ll need to set what our observation is—that is, our <strong>data</strong>. This will just be the number of heads (<span class="math inline">\(x\)</span>) we’ve observed after <span class="math inline">\(n\)</span> flips. The second thing we need to set if our <strong>prior</strong>. This is just the weights that we set in the previous section, and the <strong>prior</strong> represents our <em>“beliefs”</em> about plausible values for the parameter (in our case, the bias of the coin) <strong>before</strong> seeing the data (more on whether priors represent beliefs in the next section). We’ll represent our prior with a <span class="math inline">\(\mathbf{Beta}\)</span> distribution, because this has some convenient mathematical properties (again, more on that in the next section). By changing the two parameters of the <span class="math inline">\(\mathbf{Beta}\)</span> distribution (<span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>) you can assign more or less prior mass to the extreme (i.e., <span class="math inline">\(\theta\)</span> = 0 and <span class="math inline">\(\theta\)</span> = 1). When the values are the same, the distribution will be symmetrical and then they’re different the distribution with be asymmetrical.</p>
+<p>For our simple coin flip example, we’ll just be able to calculate the posterior directly. This posterior represents what we believe about the parameter <strong>after</strong> seeing the data.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="bayes-rule.html#cb43-1"></a><span class="co"># 1</span></span>
+<span id="cb43-2"><a href="bayes-rule.html#cb43-2"></a></span>
+<span id="cb43-3"><a href="bayes-rule.html#cb43-3"></a><span class="co"># Set the observation</span></span>
+<span id="cb43-4"><a href="bayes-rule.html#cb43-4"></a><span class="co"># This takes two parameters</span></span>
+<span id="cb43-5"><a href="bayes-rule.html#cb43-5"></a><span class="co"># X: The number of heads</span></span>
+<span id="cb43-6"><a href="bayes-rule.html#cb43-6"></a><span class="co"># N: The number of flips</span></span>
+<span id="cb43-7"><a href="bayes-rule.html#cb43-7"></a>X =<span class="st"> </span><span class="dv">2</span></span>
+<span id="cb43-8"><a href="bayes-rule.html#cb43-8"></a>N =<span class="st"> </span><span class="dv">10</span></span>
+<span id="cb43-9"><a href="bayes-rule.html#cb43-9"></a></span>
+<span id="cb43-10"><a href="bayes-rule.html#cb43-10"></a><span class="co"># set the prior</span></span>
+<span id="cb43-11"><a href="bayes-rule.html#cb43-11"></a><span class="co"># We&#39;ll use a Beta distribution as our prior</span></span>
+<span id="cb43-12"><a href="bayes-rule.html#cb43-12"></a><span class="co"># The beta distribution takes two parameters (α [alpha_prior] and β [beta_prior])</span></span>
+<span id="cb43-13"><a href="bayes-rule.html#cb43-13"></a>alpha_prior =<span class="st"> </span><span class="dv">3</span></span>
+<span id="cb43-14"><a href="bayes-rule.html#cb43-14"></a>beta_prior =<span class="st"> </span><span class="dv">3</span></span>
+<span id="cb43-15"><a href="bayes-rule.html#cb43-15"></a><span class="co"># calculate summary of prior</span></span>
+<span id="cb43-16"><a href="bayes-rule.html#cb43-16"></a>prior_mean =<span class="st"> </span>alpha_prior <span class="op">/</span><span class="st"> </span>(alpha_prior <span class="op">+</span><span class="st"> </span>beta_prior)</span>
+<span id="cb43-17"><a href="bayes-rule.html#cb43-17"></a>prior_mode =<span class="st"> </span><span class="kw">case_when</span>(alpha_prior <span class="op">==</span><span class="st"> </span>beta_prior <span class="op">&amp;</span><span class="st"> </span>alpha_prior <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">~</span><span class="st"> &quot;any value in (0,1)&quot;</span>,</span>
+<span id="cb43-18"><a href="bayes-rule.html#cb43-18"></a>          alpha_prior <span class="op">==</span><span class="st"> </span>beta_prior <span class="op">&amp;</span><span class="st"> </span>alpha_prior <span class="op">&lt;</span><span class="dv">1</span> <span class="op">~</span><span class="st"> &quot;bimodal {0,1}&quot;</span>, </span>
+<span id="cb43-19"><a href="bayes-rule.html#cb43-19"></a>          alpha_prior <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>beta_prior <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">~</span><span class="st"> &quot;0&quot;</span>,</span>
+<span id="cb43-20"><a href="bayes-rule.html#cb43-20"></a>          alpha_prior <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>beta_prior <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1</span> <span class="op">~</span><span class="st"> &quot;1&quot;</span>,</span>
+<span id="cb43-21"><a href="bayes-rule.html#cb43-21"></a>          <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="kw">round</span>((alpha_prior <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">/</span><span class="st"> </span>(alpha_prior <span class="op">+</span><span class="st"> </span>beta_prior <span class="op">-</span><span class="st"> </span><span class="dv">2</span>),<span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.character</span>() )</span>
+<span id="cb43-22"><a href="bayes-rule.html#cb43-22"></a></span>
+<span id="cb43-23"><a href="bayes-rule.html#cb43-23"></a>prior_var =<span class="st"> </span>(alpha_prior <span class="op">*</span><span class="st"> </span>beta_prior) <span class="op">/</span><span class="st"> </span>( ((alpha_prior <span class="op">+</span><span class="st"> </span>beta_prior)<span class="op">^</span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span>(alpha_prior <span class="op">+</span><span class="st"> </span>beta_prior <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)  )</span>
+<span id="cb43-24"><a href="bayes-rule.html#cb43-24"></a></span>
+<span id="cb43-25"><a href="bayes-rule.html#cb43-25"></a></span>
+<span id="cb43-26"><a href="bayes-rule.html#cb43-26"></a><span class="kw">glue</span>(<span class="st">&quot;Our data is {X} heads in {N} flips&quot;</span>)</span></code></pre></div>
+<p>Our data is 2 heads in 10 flips</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="bayes-rule.html#cb44-1"></a><span class="kw">glue</span>(<span class="st">&quot;The prior is a $</span><span class="ch">\\</span><span class="st">mathrm{{Beta}}$({alpha_prior}, {beta_prior}) distribution   </span></span>
+<span id="cb44-2"><a href="bayes-rule.html#cb44-2"></a><span class="st">The mean (expected value): $</span><span class="ch">\\</span><span class="st">theta$ = {round(prior_mean,2)}   </span></span>
+<span id="cb44-3"><a href="bayes-rule.html#cb44-3"></a><span class="st">The mode (max probablity density): $</span><span class="ch">\\</span><span class="st">theta$ = {prior_mode}   </span></span>
+<span id="cb44-4"><a href="bayes-rule.html#cb44-4"></a><span class="st">The variance: {round(prior_var,3)}&quot;</span>) </span></code></pre></div>
+<p>The prior is a <span class="math inline">\(\mathrm{Beta}\)</span>(3, 3) distribution<br />
+The mean (expected value): <span class="math inline">\(\theta\)</span> = 0.5<br />
+The mode (max probablity density): <span class="math inline">\(\theta\)</span> = 0.5<br />
+The variance: 0.036</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="bayes-rule.html#cb45-1"></a><span class="co"># 2</span></span>
+<span id="cb45-2"><a href="bayes-rule.html#cb45-2"></a></span>
+<span id="cb45-3"><a href="bayes-rule.html#cb45-3"></a><span class="co"># define a function for the prior</span></span>
+<span id="cb45-4"><a href="bayes-rule.html#cb45-4"></a>prior_func =<span class="st"> </span><span class="cf">function</span>(theta, alpha_prior,beta_prior){</span>
+<span id="cb45-5"><a href="bayes-rule.html#cb45-5"></a>    <span class="kw">dbeta</span>(<span class="dt">x =</span> theta, <span class="dt">shape1 =</span> alpha_prior, <span class="dt">shape2 =</span> beta_prior)}</span>
+<span id="cb45-6"><a href="bayes-rule.html#cb45-6"></a></span>
+<span id="cb45-7"><a href="bayes-rule.html#cb45-7"></a></span>
+<span id="cb45-8"><a href="bayes-rule.html#cb45-8"></a><span class="co"># create a tibble to hold the plot data</span></span>
+<span id="cb45-9"><a href="bayes-rule.html#cb45-9"></a>prior_df =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">theta =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">01</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb45-10"><a href="bayes-rule.html#cb45-10"></a><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">map_dbl</span>(theta, <span class="cf">function</span>(x) <span class="kw">prior_func</span>(<span class="dt">theta =</span> x, alpha_prior, beta_prior))) </span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="bayes-rule.html#cb46-1"></a><span class="co"># 3</span></span>
+<span id="cb46-2"><a href="bayes-rule.html#cb46-2"></a></span>
+<span id="cb46-3"><a href="bayes-rule.html#cb46-3"></a><span class="co"># calculate the posterior</span></span>
+<span id="cb46-4"><a href="bayes-rule.html#cb46-4"></a><span class="co"># because the beta distribution is a conjugate prior for the binomial </span></span>
+<span id="cb46-5"><a href="bayes-rule.html#cb46-5"></a><span class="co"># we can directly compute the posterior, which will also be a </span></span>
+<span id="cb46-6"><a href="bayes-rule.html#cb46-6"></a><span class="co"># Bet distribution</span></span>
+<span id="cb46-7"><a href="bayes-rule.html#cb46-7"></a></span>
+<span id="cb46-8"><a href="bayes-rule.html#cb46-8"></a></span>
+<span id="cb46-9"><a href="bayes-rule.html#cb46-9"></a><span class="co"># define a function for the posterior</span></span>
+<span id="cb46-10"><a href="bayes-rule.html#cb46-10"></a>posterior_func =<span class="st"> </span><span class="cf">function</span>(theta, X, N, alpha_prior, beta_prior){</span>
+<span id="cb46-11"><a href="bayes-rule.html#cb46-11"></a>    <span class="kw">dbeta</span>(<span class="dt">x =</span> theta, <span class="dt">shape1 =</span> alpha_prior <span class="op">+</span><span class="st"> </span>X, <span class="dt">shape2 =</span> beta_prior <span class="op">+</span><span class="st"> </span>N <span class="op">-</span><span class="st"> </span>X)</span>
+<span id="cb46-12"><a href="bayes-rule.html#cb46-12"></a>}</span>
+<span id="cb46-13"><a href="bayes-rule.html#cb46-13"></a></span>
+<span id="cb46-14"><a href="bayes-rule.html#cb46-14"></a></span>
+<span id="cb46-15"><a href="bayes-rule.html#cb46-15"></a><span class="co"># create a tibble to hold the plot data</span></span>
+<span id="cb46-16"><a href="bayes-rule.html#cb46-16"></a>posterior_df =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">theta =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">01</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb46-17"><a href="bayes-rule.html#cb46-17"></a><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">map_dbl</span>(theta, <span class="cf">function</span>(x) <span class="kw">posterior_func</span>(<span class="dt">theta =</span> x, X, N, alpha_prior, beta_prior))) </span>
+<span id="cb46-18"><a href="bayes-rule.html#cb46-18"></a></span>
+<span id="cb46-19"><a href="bayes-rule.html#cb46-19"></a><span class="co"># calculate summary of posterior</span></span>
+<span id="cb46-20"><a href="bayes-rule.html#cb46-20"></a>alpha_posterior =<span class="st"> </span>alpha_prior <span class="op">+</span><span class="st"> </span>X                      </span>
+<span id="cb46-21"><a href="bayes-rule.html#cb46-21"></a>beta_posterior =<span class="st"> </span>beta_prior <span class="op">+</span><span class="st"> </span>N <span class="op">-</span><span class="st"> </span>X</span>
+<span id="cb46-22"><a href="bayes-rule.html#cb46-22"></a></span>
+<span id="cb46-23"><a href="bayes-rule.html#cb46-23"></a>posterior_mean =<span class="st"> </span>alpha_posterior <span class="op">/</span><span class="st"> </span>(alpha_posterior <span class="op">+</span><span class="st"> </span>beta_posterior)</span>
+<span id="cb46-24"><a href="bayes-rule.html#cb46-24"></a>posterior_mode =<span class="st"> </span>(alpha_posterior <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">/</span><span class="st"> </span>(alpha_posterior <span class="op">+</span><span class="st"> </span>beta_posterior <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)</span>
+<span id="cb46-25"><a href="bayes-rule.html#cb46-25"></a>posterior_var =<span class="st"> </span>(alpha_posterior <span class="op">*</span><span class="st"> </span>beta_posterior) <span class="op">/</span><span class="st"> </span></span>
+<span id="cb46-26"><a href="bayes-rule.html#cb46-26"></a><span class="st">                         </span>( ((alpha_posterior <span class="op">+</span><span class="st"> </span>beta_posterior)<span class="op">^</span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span>(alpha_posterior <span class="op">+</span><span class="st"> </span>beta_posterior <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)  ) </span>
+<span id="cb46-27"><a href="bayes-rule.html#cb46-27"></a>                         </span>
+<span id="cb46-28"><a href="bayes-rule.html#cb46-28"></a><span class="kw">glue</span>(<span class="st">&quot;The posterior is a $</span><span class="ch">\\</span><span class="st">mathrm{{Beta}}$({alpha_posterior}, {beta_posterior}) distribution   </span></span>
+<span id="cb46-29"><a href="bayes-rule.html#cb46-29"></a><span class="st">The mean (expected value): $</span><span class="ch">\\</span><span class="st">theta$ = {round(posterior_mean,2)}   </span></span>
+<span id="cb46-30"><a href="bayes-rule.html#cb46-30"></a><span class="st">The mode (max probablity density): $</span><span class="ch">\\</span><span class="st">theta$ = {round(posterior_mode,2)}   </span></span>
+<span id="cb46-31"><a href="bayes-rule.html#cb46-31"></a><span class="st">The variance: {round(posterior_var,3)}&quot;</span>)              </span></code></pre></div>
+<p>The posterior is a <span class="math inline">\(\mathrm{Beta}\)</span>(5, 11) distribution<br />
+The mean (expected value): <span class="math inline">\(\theta\)</span> = 0.31<br />
+The mode (max probablity density): <span class="math inline">\(\theta\)</span> = 0.29<br />
+The variance: 0.013</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="bayes-rule.html#cb47-1"></a><span class="co"># 4</span></span>
+<span id="cb47-2"><a href="bayes-rule.html#cb47-2"></a></span>
+<span id="cb47-3"><a href="bayes-rule.html#cb47-3"></a><span class="co"># plot the prior and posterior</span></span>
+<span id="cb47-4"><a href="bayes-rule.html#cb47-4"></a>combined_df =<span class="st"> </span>prior_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">full_join</span>(posterior_df, <span class="dt">by =</span> <span class="st">&#39;theta&#39;</span>, <span class="dt">suffix =</span> <span class="kw">c</span>(<span class="st">&quot;.prior&quot;</span>,<span class="st">&quot;.posterior&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb47-5"><a href="bayes-rule.html#cb47-5"></a><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">prior &gt; posterior</span><span class="st">`</span> =<span class="st"> </span>density.prior <span class="op">&gt;</span><span class="st"> </span>density.posterior) <span class="op">%&gt;%</span></span>
+<span id="cb47-6"><a href="bayes-rule.html#cb47-6"></a><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">c</span>(<span class="st">&quot;density.prior&quot;</span>,<span class="st">&quot;density.posterior&quot;</span>), <span class="dt">names_to =</span> <span class="st">&quot;type&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;density&quot;</span>)</span>
+<span id="cb47-7"><a href="bayes-rule.html#cb47-7"></a></span>
+<span id="cb47-8"><a href="bayes-rule.html#cb47-8"></a></span>
+<span id="cb47-9"><a href="bayes-rule.html#cb47-9"></a><span class="kw">ggplot</span>(combined_df, <span class="kw">aes</span>(<span class="dt">x =</span> theta, <span class="dt">y =</span> density, <span class="dt">colour =</span> type, <span class="dt">linetype =</span> type)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb47-10"><a href="bayes-rule.html#cb47-10"></a><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">density.posterior =</span> <span class="st">&quot;seagreen&quot;</span>, <span class="dt">density.prior  =</span> <span class="st">&quot;darkblue&quot;</span>),</span>
+<span id="cb47-11"><a href="bayes-rule.html#cb47-11"></a>                   <span class="dt">labels =</span> <span class="kw">c</span>(<span class="dt">density.posterior =</span> <span class="st">&quot;posterior&quot;</span>, <span class="dt">density.prior  =</span> <span class="st">&quot;prior&quot;</span>), </span>
+<span id="cb47-12"><a href="bayes-rule.html#cb47-12"></a>                   <span class="dt">name =</span> <span class="ot">NULL</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb47-13"><a href="bayes-rule.html#cb47-13"></a><span class="kw">scale_linetype</span>(<span class="dt">guide =</span> <span class="st">&quot;none&quot;</span>) <span class="op">+</span></span>
+<span id="cb47-14"><a href="bayes-rule.html#cb47-14"></a><span class="kw">geom_point</span>(<span class="dt">data =</span> combined_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(<span class="st">`</span><span class="dt">prior &gt; posterior</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">mid =</span> <span class="kw">abs</span>(<span class="kw">median</span>(theta) <span class="op">-</span><span class="st"> </span>theta)) <span class="op">%&gt;%</span></span>
+<span id="cb47-15"><a href="bayes-rule.html#cb47-15"></a><span class="kw">filter</span>(mid <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(mid)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), </span>
+<span id="cb47-16"><a href="bayes-rule.html#cb47-16"></a>          <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> theta, <span class="dt">y =</span> density, <span class="dt">colour =</span> type, <span class="dt">shape =</span> <span class="st">`</span><span class="dt">prior &gt; posterior</span><span class="st">`</span>), </span>
+<span id="cb47-17"><a href="bayes-rule.html#cb47-17"></a>           <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb47-18"><a href="bayes-rule.html#cb47-18"></a><span class="kw">scale_shape_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;TRUE&quot;</span> =<span class="st"> </span><span class="dv">21</span>, <span class="st">&quot;FALSE&quot;</span> =<span class="st"> </span><span class="dv">19</span>), <span class="dt">guide =</span> <span class="st">&quot;none&quot;</span>) <span class="op">+</span></span>
+<span id="cb47-19"><a href="bayes-rule.html#cb47-19"></a><span class="kw">scale_x_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;θ&quot;</span>, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">2</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>(<span class="dv">12</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span></code></pre></div>
+<p><img src="book_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<p>Once we plot the <strong>prior</strong> and the <strong>posterior</strong> together we’ll see that for some values of <span class="math inline">\(\theta\)</span> seeing the data resulted in us <em>believing</em> that that value of <span class="math inline">\(\theta\)</span> is <em>more probable</em>. For other values, we now <em>believe</em> that that value of <span class="math inline">\(\theta\)</span> is <em>less probable</em> (in the plots, a value that is <em>less probable</em> after seeing the data is shown with empty point and a value that is <em>more probable</em> after seeing the data is shown with a filled point).</p>
+<p>For each value of the parameter we can examine whether the data resulted in us believing that that value of the parameter is more or less probable. We can call this the <strong>strength of evidence from the data about <span class="math inline">\(\theta\)</span></strong>. We can calculate this by just calculating the relative difference between the prior and the posterior—that is, by calculating <span class="math inline">\(\frac{\pi(\theta|Y)}{\pi(\theta)}\)</span>.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="bayes-rule.html#cb48-1"></a><span class="co"># 5</span></span>
+<span id="cb48-2"><a href="bayes-rule.html#cb48-2"></a></span>
+<span id="cb48-3"><a href="bayes-rule.html#cb48-3"></a><span class="co"># strength of evidence for each value of theta</span></span>
+<span id="cb48-4"><a href="bayes-rule.html#cb48-4"></a></span>
+<span id="cb48-5"><a href="bayes-rule.html#cb48-5"></a>updating_df =<span class="st"> </span>combined_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> <span class="st">&quot;type&quot;</span>, <span class="dt">values_from =</span> <span class="st">&quot;density&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb48-6"><a href="bayes-rule.html#cb48-6"></a><span class="kw">mutate</span>(<span class="dt">updating =</span> density.posterior <span class="op">/</span><span class="st"> </span>density.prior) </span>
+<span id="cb48-7"><a href="bayes-rule.html#cb48-7"></a></span>
+<span id="cb48-8"><a href="bayes-rule.html#cb48-8"></a><span class="kw">ggplot</span>(updating_df, <span class="kw">aes</span>(<span class="dt">x =</span> theta, <span class="dt">y =</span> updating)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">na.rm =</span> <span class="ot">TRUE</span>, <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb48-9"><a href="bayes-rule.html#cb48-9"></a><span class="kw">geom_point</span>(<span class="dt">data =</span> updating_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(<span class="st">`</span><span class="dt">prior &gt; posterior</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">mid =</span> <span class="kw">abs</span>(<span class="kw">median</span>(theta) <span class="op">-</span><span class="st"> </span>theta)) <span class="op">%&gt;%</span></span>
+<span id="cb48-10"><a href="bayes-rule.html#cb48-10"></a><span class="kw">filter</span>(mid <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(mid)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span>), </span>
+<span id="cb48-11"><a href="bayes-rule.html#cb48-11"></a>          <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> theta, <span class="dt">y =</span> updating, <span class="dt">shape =</span> <span class="st">`</span><span class="dt">prior &gt; posterior</span><span class="st">`</span>), </span>
+<span id="cb48-12"><a href="bayes-rule.html#cb48-12"></a>           <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span></span>
+<span id="cb48-13"><a href="bayes-rule.html#cb48-13"></a><span class="kw">scale_shape_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;TRUE&quot;</span> =<span class="st"> </span><span class="dv">21</span>, <span class="st">&quot;FALSE&quot;</span> =<span class="st"> </span><span class="dv">19</span>), <span class="dt">guide =</span> <span class="st">&quot;none&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb48-14"><a href="bayes-rule.html#cb48-14"></a><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;strength of evidence (updating factor)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">1</span>, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb48-15"><a href="bayes-rule.html#cb48-15"></a><span class="kw">scale_x_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;θ&quot;</span>, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">2</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>(<span class="dv">12</span>)</span></code></pre></div>
+<p><img src="book_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<p>We can now turn our attention to the data and we can ask: “what is the probability of different observations <strong>assuming</strong> different values of <span class="math inline">\(\theta\)</span>?”. This can be done with a simulation (like in our earlier examples); however, I know that it follows a <span class="math inline">\(\mathbf{Binomial}\)</span> distribution, so I can just generate it for different assumed values of <span class="math inline">\(\theta\)</span>.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="bayes-rule.html#cb49-1"></a><span class="co"># 6</span></span>
+<span id="cb49-2"><a href="bayes-rule.html#cb49-2"></a></span>
+<span id="cb49-3"><a href="bayes-rule.html#cb49-3"></a>thetas =<span class="st"> </span>updating_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(<span class="st">`</span><span class="dt">prior &gt; posterior</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">mid =</span> <span class="kw">abs</span>(<span class="kw">median</span>(theta) <span class="op">-</span><span class="st"> </span>theta)) <span class="op">%&gt;%</span></span>
+<span id="cb49-4"><a href="bayes-rule.html#cb49-4"></a><span class="kw">filter</span>(mid <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(mid)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(theta) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="st">`</span><span class="dt">prior &gt; posterior</span><span class="st">`</span>,theta)</span>
+<span id="cb49-5"><a href="bayes-rule.html#cb49-5"></a></span>
+<span id="cb49-6"><a href="bayes-rule.html#cb49-6"></a></span>
+<span id="cb49-7"><a href="bayes-rule.html#cb49-7"></a></span>
+<span id="cb49-8"><a href="bayes-rule.html#cb49-8"></a>conditional_df =<span class="st"> </span><span class="kw">map_df</span>(thetas<span class="op">$</span>theta, <span class="cf">function</span>(t)</span>
+<span id="cb49-9"><a href="bayes-rule.html#cb49-9"></a><span class="kw">tibble</span>(<span class="dt">x =</span> <span class="dv">0</span><span class="op">:</span>N, </span>
+<span id="cb49-10"><a href="bayes-rule.html#cb49-10"></a>       <span class="dt">prob =</span> <span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">0</span><span class="op">:</span>N, <span class="dt">size =</span> N, <span class="dt">prob =</span> t), </span>
+<span id="cb49-11"><a href="bayes-rule.html#cb49-11"></a>      <span class="dt">theta =</span> t)) <span class="op">%&gt;%</span></span>
+<span id="cb49-12"><a href="bayes-rule.html#cb49-12"></a><span class="st">       </span><span class="kw">mutate</span>(<span class="dt">ob =</span> x <span class="op">==</span><span class="st"> </span>X) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_split</span>(theta)</span>
+<span id="cb49-13"><a href="bayes-rule.html#cb49-13"></a>       </span>
+<span id="cb49-14"><a href="bayes-rule.html#cb49-14"></a>       </span>
+<span id="cb49-15"><a href="bayes-rule.html#cb49-15"></a></span>
+<span id="cb49-16"><a href="bayes-rule.html#cb49-16"></a>conditional_plots =<span class="st"> </span><span class="kw">map</span>(conditional_df, </span>
+<span id="cb49-17"><a href="bayes-rule.html#cb49-17"></a>    <span class="cf">function</span>(d) <span class="kw">ggplot</span>(<span class="dt">data =</span> d, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> prob)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">alpha =</span> ob), <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb49-18"><a href="bayes-rule.html#cb49-18"></a><span class="st">       </span><span class="kw">geom_line</span>(<span class="dt">alpha =</span> <span class="fl">.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_alpha_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(.<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">guide =</span> <span class="st">&quot;none&quot;</span>) <span class="op">+</span></span>
+<span id="cb49-19"><a href="bayes-rule.html#cb49-19"></a><span class="st">       </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,N,<span class="dv">2</span>), <span class="dt">name =</span> <span class="st">&quot;number of heads&quot;</span>) <span class="op">+</span></span>
+<span id="cb49-20"><a href="bayes-rule.html#cb49-20"></a><span class="st">       </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;p(Y|θ)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">glue</span>(<span class="st">&quot;θ = {d$theta[1]}&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>(<span class="dv">12</span>))</span>
+<span id="cb49-21"><a href="bayes-rule.html#cb49-21"></a>                        </span>
+<span id="cb49-22"><a href="bayes-rule.html#cb49-22"></a>patchwork<span class="op">::</span><span class="kw">wrap_plots</span>(conditional_plots,<span class="dt">nrow =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="book_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<p>The next concept, <span class="math inline">\(p(Y)\)</span>, or the <strong>marginal probability</strong>, is a slightly tricky concept: <span class="math inline">\(p(Y)\)</span> is the probability of observing our data independent of whatever value <span class="math inline">\(\theta\)</span> might take. Often this value is ignored, especially in the context of parameter estimation (as you’ll see in later sections). In fact, this value isn’t present in the “proportional” formulation of Bayes rule; however, understanding <span class="math inline">\(p(Y)\)</span> is extremely useful in the context of <strong>Bayes factors</strong>.</p>
+<p>The <strong>marginal probability</strong> distribution/mass plot can be more readily conceptualised as the predictions a model (<span class="math inline">\(\mathcal{M}_I\)</span>) makes about the data. We can generate this by seeing what data is predicted by each value of <span class="math inline">\(\theta\)</span> where <span class="math inline">\(\theta\)</span> itself has a probability distribution specified by <span class="math inline">\(\pi(\theta)\)</span>. This concept is maybe easiest to understand when we consider a uniform prior where each value of <span class="math inline">\(\theta\)</span> is equally probably. Then we can ask, what is the probability of observing a specific outcome <span class="math inline">\(Y\)</span> independent of the value of <span class="math inline">\(\theta\)</span> (or, averaged across all possible values of <span class="math inline">\(\theta\)</span>. This is just <span class="math inline">\(\frac{1}{n}\)</span>, where <span class="math inline">\(n\)</span> is the number of possible outcomes. In our coin flip example, there are 11 possible outcomes—0 heads, 1 head, 2 heads,… 10 heads. So <span class="math inline">\(p(Y)\)</span> would be <span class="math inline">\(\frac{1}{11}\)</span> for any outcome. Or phrased another way, we can say that, without knowing <span class="math inline">\(\theta\)</span>, but knowing that every value of <span class="math inline">\(\theta\)</span> is equally probably, we can predict that any observation, such as our specific observation, would occur with a probability of <span class="math inline">\(\frac{1}{11}\)</span>. A very important thing to note about the <em>marginal probability distribution</em> is that it must sum to 1. We’ll see in the example below, that for different priors (<span class="math inline">\(\pi(\theta)\)</span>), the pattern see in the marginal distribution changes, but it always sums to 1. This means that when some observations become <strong>more</strong> probable, other observations must become <strong>less</strong> probable.</p>
+<p>In the table below, you’ll see how the <strong>marginal probability</strong> is calculated for each observation. The table just shows the calculation for our specific observation—that is, our <span class="math inline">\(p(Y)\)</span>. Note that the accuracy of our estimate for <span class="math inline">\(p(Y)\)</span> depends on how many values of <span class="math inline">\(\theta\)</span> we average across. This means that for a uniform prior, the limit of our estimate will approach <span class="math inline">\(\frac{1}{11}\)</span> when the number of values of <span class="math inline">\(\theta\)</span> that we average across approaches infinity.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="bayes-rule.html#cb50-1"></a><span class="co"># 7</span></span>
+<span id="cb50-2"><a href="bayes-rule.html#cb50-2"></a></span>
+<span id="cb50-3"><a href="bayes-rule.html#cb50-3"></a>resolution =<span class="st"> </span><span class="dv">1001</span> <span class="co"># set the resolution - this determines how many possible values of theta are considered. </span></span>
+<span id="cb50-4"><a href="bayes-rule.html#cb50-4"></a>                <span class="co"># to get an accurate estimate of theta, you need to consider every possible value of theta</span></span>
+<span id="cb50-5"><a href="bayes-rule.html#cb50-5"></a>                <span class="co"># adjust the value highter to get a more accurate estimate of p(Y)</span></span>
+<span id="cb50-6"><a href="bayes-rule.html#cb50-6"></a></span>
+<span id="cb50-7"><a href="bayes-rule.html#cb50-7"></a>theta_range =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dt">length.out =</span> resolution)</span>
+<span id="cb50-8"><a href="bayes-rule.html#cb50-8"></a></span>
+<span id="cb50-9"><a href="bayes-rule.html#cb50-9"></a>marginal_prob_tbl =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">theta =</span> theta_range, <span class="dt">x =</span> X, <span class="dt">n =</span> N,</span>
+<span id="cb50-10"><a href="bayes-rule.html#cb50-10"></a><span class="dt">cond_prob =</span> <span class="kw">map_dbl</span>(theta_range, <span class="cf">function</span>(t) <span class="kw">dbinom</span>(<span class="dt">x =</span> X,<span class="dt">size =</span> N,<span class="dt">prob =</span> t)),</span>
+<span id="cb50-11"><a href="bayes-rule.html#cb50-11"></a><span class="dt">prior_prob =</span> <span class="kw">map_dbl</span>(theta_range, <span class="cf">function</span>(t) <span class="kw">dbeta</span>(<span class="dt">x =</span> t, <span class="dt">shape1 =</span> alpha_prior, <span class="dt">shape2 =</span> beta_prior))) <span class="op">%&gt;%</span></span>
+<span id="cb50-12"><a href="bayes-rule.html#cb50-12"></a><span class="st">                     </span><span class="kw">mutate</span>(<span class="dt">prior_prob =</span> prior_prob <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(prior_prob))</span>
+<span id="cb50-13"><a href="bayes-rule.html#cb50-13"></a></span>
+<span id="cb50-14"><a href="bayes-rule.html#cb50-14"></a>                     </span>
+<span id="cb50-15"><a href="bayes-rule.html#cb50-15"></a>marginal_prob_tbl =<span class="st"> </span>marginal_prob_tbl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">margin =</span> cond_prob <span class="op">*</span><span class="st"> </span>prior_prob)</span>
+<span id="cb50-16"><a href="bayes-rule.html#cb50-16"></a>                         </span>
+<span id="cb50-17"><a href="bayes-rule.html#cb50-17"></a>marginal_prob_tbl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="kw">seq</span>(<span class="dv">1</span>,resolution,<span class="dt">length.out =</span> <span class="dv">11</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">set_colnames</span>(<span class="kw">c</span>(<span class="st">&quot;$</span><span class="ch">\\</span><span class="st">theta$&quot;</span>,<span class="st">&quot;$X$&quot;</span>,<span class="st">&quot;$N$&quot;</span>,<span class="st">&quot;$p(Y|</span><span class="ch">\\</span><span class="st">theta$)&quot;</span>,</span>
+<span id="cb50-18"><a href="bayes-rule.html#cb50-18"></a>                                     <span class="st">&quot;$</span><span class="ch">\\</span><span class="st">pi(</span><span class="ch">\\</span><span class="st">theta)$&quot;</span>,<span class="st">&quot;$p(Y,</span><span class="ch">\\</span><span class="st">theta,</span><span class="ch">\\</span><span class="st">pi)$&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb50-19"><a href="bayes-rule.html#cb50-19"></a><span class="st">                    </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">format =</span> <span class="st">&quot;html&quot;</span>, <span class="dt">digits =</span> <span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb50-20"><a href="bayes-rule.html#cb50-20"></a><span class="st">                    </span>kableExtra<span class="op">::</span><span class="kw">kable_styling</span>(<span class="dt">full_width =</span> T)</span></code></pre></div>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+<span class="math inline">\(\theta\)</span>
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(X\)</span>
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(N\)</span>
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(p(Y|\theta\)</span>)
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(\pi(\theta)\)</span>
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(p(Y,\theta,\pi)\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.194
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.302
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.233
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.121
+</td>
+<td style="text-align:right;">
+0.002
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.044
+</td>
+<td style="text-align:right;">
+0.002
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.6
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.011
+</td>
+<td style="text-align:right;">
+0.002
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.7
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.8
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.9
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="bayes-rule.html#cb51-1"></a>glue<span class="op">::</span><span class="kw">glue</span>(<span class="st">&quot;$p(Y)$ = {marginal_prob_tbl %&gt;% pull(margin) %&gt;% sum() %&gt;% round(3)}&quot;</span>) </span></code></pre></div>
+<p><span class="math inline">\(p(Y)\)</span> = 0.09</p>
+<p>The table just shows the marginal probability for our observation, but in the figure below we can plot the marginal distribution which considers every possible observation. This allows us to look of the entire range of possible observations and see which are more or less probable. These are the predictions our model makes.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="bayes-rule.html#cb52-1"></a><span class="co"># 8</span></span>
+<span id="cb52-2"><a href="bayes-rule.html#cb52-2"></a></span>
+<span id="cb52-3"><a href="bayes-rule.html#cb52-3"></a>marginal_func =<span class="st"> </span><span class="cf">function</span>(theta,X,N,alpha_prior,beta_prior) </span>
+<span id="cb52-4"><a href="bayes-rule.html#cb52-4"></a>    <span class="kw">dbinom</span>(<span class="dt">x =</span> X, <span class="dt">size =</span> N, <span class="dt">prob =</span> theta) <span class="op">*</span><span class="st"> </span><span class="kw">dbeta</span>(<span class="dt">x =</span> theta, <span class="dt">shape1 =</span> alpha_prior, <span class="dt">shape2 =</span> beta_prior)</span>
+<span id="cb52-5"><a href="bayes-rule.html#cb52-5"></a></span>
+<span id="cb52-6"><a href="bayes-rule.html#cb52-6"></a></span>
+<span id="cb52-7"><a href="bayes-rule.html#cb52-7"></a>marginal_df =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">x =</span> <span class="dv">0</span><span class="op">:</span>N,</span>
+<span id="cb52-8"><a href="bayes-rule.html#cb52-8"></a><span class="dt">marginal_prob =</span> <span class="kw">map_dbl</span>(<span class="dt">.x =</span> <span class="dv">0</span><span class="op">:</span>N, <span class="dt">.f =</span> <span class="cf">function</span>(x) <span class="kw">integrate</span>(<span class="dt">f =</span> marginal_func, <span class="dt">lower =</span> <span class="dv">0</span>, <span class="dt">upper =</span> <span class="dv">1</span>, </span>
+<span id="cb52-9"><a href="bayes-rule.html#cb52-9"></a>                                             x, N, alpha_prior, beta_prior)<span class="op">$</span>value), <span class="dt">ob =</span> x <span class="op">==</span><span class="st"> </span>X)</span>
+<span id="cb52-10"><a href="bayes-rule.html#cb52-10"></a>                        </span>
+<span id="cb52-11"><a href="bayes-rule.html#cb52-11"></a>general_model_plot =<span class="st"> </span>marginal_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> marginal_prob)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">alpha =</span> ob), <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb52-12"><a href="bayes-rule.html#cb52-12"></a><span class="kw">geom_line</span>(<span class="dt">alpha =</span> <span class="fl">.1</span>) <span class="op">+</span><span class="st">  </span><span class="kw">scale_alpha_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(.<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">guide =</span> <span class="st">&quot;none&quot;</span>) <span class="op">+</span></span>
+<span id="cb52-13"><a href="bayes-rule.html#cb52-13"></a><span class="st">       </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,N,<span class="dv">2</span>), <span class="dt">name =</span> <span class="st">&quot;number of heads&quot;</span>) <span class="op">+</span></span>
+<span id="cb52-14"><a href="bayes-rule.html#cb52-14"></a><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;marginal probability&quot;</span>)  <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>(<span class="dv">12</span>)</span>
+<span id="cb52-15"><a href="bayes-rule.html#cb52-15"></a>general_model_plot</span></code></pre></div>
+<p><img src="book_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<p>We can compare the marginal probability of our observation <span class="math inline">\(p(Y)\)</span> with the conditional probability <span class="math inline">\(p(Y|\theta)\)</span> — that is, conditional on a specific value of <span class="math inline">\(\theta\)</span>. The ratio of these two <span class="math inline">\(\frac{p(Y|\theta)}{p(Y)}\)</span> is the predictive accuracy for our data that gained by considering <span class="math inline">\(\theta\)</span>.</p>
+<p>The following plot simply shows the conditional probability of the data give different values of the paramater (labelled <strong>conditional</strong>) and the marginal probability or the probability of the data irrespective of the value of the parameter (labelled <strong>marginal</strong>).</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="bayes-rule.html#cb53-1"></a><span class="co"># 9</span></span>
+<span id="cb53-2"><a href="bayes-rule.html#cb53-2"></a>marginal_conditional_df =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">theta =</span> <span class="kw">c</span>(<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>, <span class="fl">.001</span>),thetas<span class="op">$</span>theta),</span>
+<span id="cb53-3"><a href="bayes-rule.html#cb53-3"></a>    <span class="dt">prob =</span> <span class="kw">dbinom</span>(<span class="dt">x =</span> X, <span class="dt">size =</span> N, <span class="dt">prob =</span> <span class="kw">c</span>(<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">001</span>),thetas<span class="op">$</span>theta))) <span class="op">%&gt;%</span></span>
+<span id="cb53-4"><a href="bayes-rule.html#cb53-4"></a><span class="kw">mutate</span>(<span class="dt">highlight =</span> theta <span class="op">%in%</span><span class="st"> </span>thetas<span class="op">$</span>theta) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">full_join</span>(thetas, <span class="dt">by =</span> <span class="st">&quot;theta&quot;</span>)</span>
+<span id="cb53-5"><a href="bayes-rule.html#cb53-5"></a></span>
+<span id="cb53-6"><a href="bayes-rule.html#cb53-6"></a></span>
+<span id="cb53-7"><a href="bayes-rule.html#cb53-7"></a>marginal_prob =<span class="st"> </span>marginal_prob_tbl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(margin) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>(<span class="dt">na.rm =</span> T) </span>
+<span id="cb53-8"><a href="bayes-rule.html#cb53-8"></a>marginal_conditional_df<span class="op">$</span>marginal_prob =<span class="st"> </span>marginal_prob</span>
+<span id="cb53-9"><a href="bayes-rule.html#cb53-9"></a>marginal_conditional_df <span class="op">%&gt;%</span></span>
+<span id="cb53-10"><a href="bayes-rule.html#cb53-10"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> theta, <span class="dt">y =</span> prob)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> <span class="st">&quot;conditional&quot;</span>), <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb53-11"><a href="bayes-rule.html#cb53-11"></a><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> theta, <span class="dt">y =</span> marginal_prob, <span class="dt">colour =</span> <span class="st">&quot;marginal&quot;</span>), <span class="dt">linetype =</span> <span class="dv">2</span>, <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb53-12"><a href="bayes-rule.html#cb53-12"></a><span class="kw">geom_point</span>(. <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(highlight <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>), <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> theta, <span class="dt">y =</span> prob, <span class="dt">shape =</span> <span class="st">`</span><span class="dt">prior &gt; posterior</span><span class="st">`</span>), </span>
+<span id="cb53-13"><a href="bayes-rule.html#cb53-13"></a>           <span class="dt">size =</span> <span class="dv">6</span>, <span class="dt">colour =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span></span>
+<span id="cb53-14"><a href="bayes-rule.html#cb53-14"></a><span class="kw">geom_point</span>(. <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(highlight <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>), <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> theta, <span class="dt">y =</span> marginal_df <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb53-15"><a href="bayes-rule.html#cb53-15"></a><span class="st">                                                          </span><span class="kw">filter</span>(x <span class="op">==</span><span class="st"> </span>X) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(marginal_prob),</span>
+<span id="cb53-16"><a href="bayes-rule.html#cb53-16"></a>                                                         <span class="dt">shape =</span> <span class="st">`</span><span class="dt">prior &gt; posterior</span><span class="st">`</span>), <span class="dt">size =</span> <span class="dv">6</span>, </span>
+<span id="cb53-17"><a href="bayes-rule.html#cb53-17"></a>           <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;seagreen&quot;</span>) <span class="op">+</span></span>
+<span id="cb53-18"><a href="bayes-rule.html#cb53-18"></a><span class="kw">scale_shape_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;TRUE&quot;</span> =<span class="st"> </span><span class="dv">21</span>, <span class="st">&quot;FALSE&quot;</span> =<span class="st"> </span><span class="dv">19</span>), <span class="dt">guide =</span> <span class="st">&quot;none&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb53-19"><a href="bayes-rule.html#cb53-19"></a><span class="kw">scale_y_continuous</span>(<span class="kw">glue</span>(<span class="st">&quot;Pr({X} heads in {N} flips)&quot;</span>)) <span class="op">+</span></span>
+<span id="cb53-20"><a href="bayes-rule.html#cb53-20"></a><span class="kw">scale_x_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;θ&quot;</span>, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">2</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>(<span class="dv">12</span>) <span class="op">+</span></span>
+<span id="cb53-21"><a href="bayes-rule.html#cb53-21"></a><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;darkblue&quot;</span>,<span class="st">&quot;seagreen&quot;</span>), <span class="dt">name =</span> <span class="ot">NULL</span>)</span></code></pre></div>
+<p><img src="book_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="bayes-rule.html#cb54-1"></a><span class="co"># 10</span></span>
+<span id="cb54-2"><a href="bayes-rule.html#cb54-2"></a>marginal_conditional_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">marginal =</span>  marginal_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(x <span class="op">==</span><span class="st"> </span>X) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(marginal_prob)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb54-3"><a href="bayes-rule.html#cb54-3"></a><span class="kw">mutate</span>(<span class="dt">predictive =</span> prob <span class="op">/</span><span class="st"> </span>marginal) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb54-4"><a href="bayes-rule.html#cb54-4"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> theta, <span class="dt">y =</span> predictive)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb54-5"><a href="bayes-rule.html#cb54-5"></a><span class="kw">geom_point</span>(. <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(highlight <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>), <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> theta, <span class="dt">y =</span> predictive,</span>
+<span id="cb54-6"><a href="bayes-rule.html#cb54-6"></a>                                                         <span class="dt">shape =</span> <span class="st">`</span><span class="dt">prior &gt; posterior</span><span class="st">`</span>), <span class="dt">size =</span> <span class="dv">6</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb54-7"><a href="bayes-rule.html#cb54-7"></a><span class="kw">scale_shape_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;TRUE&quot;</span> =<span class="st"> </span><span class="dv">21</span>, <span class="st">&quot;FALSE&quot;</span> =<span class="st"> </span><span class="dv">19</span>), <span class="dt">guide =</span> <span class="st">&quot;none&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb54-8"><a href="bayes-rule.html#cb54-8"></a><span class="kw">scale_y_continuous</span>(<span class="st">&quot;gain in predictive accuracy&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">1</span>, <span class="dt">alpha =</span> <span class="fl">.1</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb54-9"><a href="bayes-rule.html#cb54-9"></a><span class="kw">scale_x_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;θ&quot;</span>, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">2</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> <span class="dv">18</span>) </span></code></pre></div>
+<p><img src="book_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+<p>This plot <strong>is just the same as the strength of evidence</strong> for values of <span class="math inline">\(\theta\)</span> or the factor by which we update our beliefs about <span class="math inline">\(\theta\)</span> after observing the data. This fact is just represented by the equality in the ratio form of Bayes rule <span class="math inline">\(\frac{\pi(\theta|Y)}{\pi({\theta})}=\frac{p(Y|\theta)}{p(Y)}\)</span>. This equation can now we read as meaning that the strength of evidence that we have for a parameter value is just the same as the gain in predictive accuracy.</p>
+</div>
+</div>
+<div id="bayes-factor" class="section level2">
+<h2><span class="header-section-number">4.2</span> Bayes factor</h2>
+<p>In this example, we’ve only considered one model defined by the prior we set at the beginning. However, marginal densities are particularly useful when we consider multiple models. In the next example, we plot the marginal density for our current model (<span class="math inline">\(\mathcal{M}_1\)</span>; subplot <strong>A</strong>) and more restricted model where we no longer a probability distribution over every possible value of <span class="math inline">\(\theta\)</span>, but instead only consider one possible value, <span class="math inline">\(\theta\)</span> = 0.5 (<span class="math inline">\(\mathcal{M}_2\)</span>; subplot <strong>A</strong>). The difference in predictions the models make is shown in subplot <strong>C</strong>. This plot is just generated as the ratio <span class="math inline">\(\frac{p(Y|\mathcal{M}_1)}{p(Y|\mathcal{M}_2)}\)</span>. Once we have our data in hand, we can see whether our data is better predicted by Model 1 or Model 2—this value is the <strong>Bayes factor</strong>.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="bayes-rule.html#cb55-1"></a><span class="co"># 11</span></span>
+<span id="cb55-2"><a href="bayes-rule.html#cb55-2"></a></span>
+<span id="cb55-3"><a href="bayes-rule.html#cb55-3"></a>marginal_df_null =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">x =</span> <span class="dv">0</span><span class="op">:</span>N,</span>
+<span id="cb55-4"><a href="bayes-rule.html#cb55-4"></a><span class="dt">marginal_prob =</span> <span class="kw">map_dbl</span>(<span class="dt">.x =</span> <span class="dv">0</span><span class="op">:</span>N, <span class="dt">.f =</span> <span class="cf">function</span>(x) <span class="kw">dbinom</span>(<span class="dt">x =</span> x, <span class="dt">size =</span> N, <span class="dt">prob =</span> <span class="fl">0.5</span>) <span class="op">*</span><span class="st"> </span><span class="dv">1</span>), <span class="dt">ob =</span> x <span class="op">==</span><span class="st"> </span>X)</span>
+<span id="cb55-5"><a href="bayes-rule.html#cb55-5"></a></span>
+<span id="cb55-6"><a href="bayes-rule.html#cb55-6"></a>                        </span>
+<span id="cb55-7"><a href="bayes-rule.html#cb55-7"></a>null_plot =<span class="st"> </span>marginal_df_null <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> marginal_prob)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">alpha =</span> ob), <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb55-8"><a href="bayes-rule.html#cb55-8"></a><span class="kw">geom_line</span>(<span class="dt">alpha =</span> <span class="fl">.1</span>) <span class="op">+</span><span class="st">  </span><span class="kw">scale_alpha_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(.<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">guide =</span> <span class="st">&quot;none&quot;</span>) <span class="op">+</span></span>
+<span id="cb55-9"><a href="bayes-rule.html#cb55-9"></a><span class="st">       </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,N,<span class="dv">2</span>), <span class="dt">name =</span> <span class="st">&quot;number of heads&quot;</span>) <span class="op">+</span></span>
+<span id="cb55-10"><a href="bayes-rule.html#cb55-10"></a><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;p(Y)&quot;</span>)  <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>(<span class="dv">12</span>)  </span>
+<span id="cb55-11"><a href="bayes-rule.html#cb55-11"></a></span>
+<span id="cb55-12"><a href="bayes-rule.html#cb55-12"></a>bf_plot =<span class="st"> </span>marginal_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">full_join</span>(marginal_df_null, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>,<span class="st">&quot;ob&quot;</span>), <span class="dt">suffix =</span> <span class="kw">c</span>(<span class="st">&quot;.general&quot;</span>,<span class="st">&quot;.null&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb55-13"><a href="bayes-rule.html#cb55-13"></a><span class="kw">mutate</span>(<span class="dt">BF =</span>  marginal_prob.general <span class="op">/</span><span class="st"> </span>marginal_prob.null) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb55-14"><a href="bayes-rule.html#cb55-14"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> BF)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">alpha =</span> ob), <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb55-15"><a href="bayes-rule.html#cb55-15"></a><span class="kw">geom_line</span>(<span class="dt">alpha =</span> <span class="fl">.1</span>) <span class="op">+</span><span class="st">  </span><span class="kw">scale_alpha_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(.<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">guide =</span> <span class="st">&quot;none&quot;</span>) <span class="op">+</span></span>
+<span id="cb55-16"><a href="bayes-rule.html#cb55-16"></a><span class="st">       </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,N,<span class="dv">2</span>), <span class="dt">name =</span> <span class="st">&quot;number of heads&quot;</span>) <span class="op">+</span></span>
+<span id="cb55-17"><a href="bayes-rule.html#cb55-17"></a><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;bayes factor&quot;</span>, <span class="dt">trans =</span> <span class="st">&quot;log10&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb55-18"><a href="bayes-rule.html#cb55-18"></a><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>(<span class="dv">12</span>)  </span>
+<span id="cb55-19"><a href="bayes-rule.html#cb55-19"></a>                 </span>
+<span id="cb55-20"><a href="bayes-rule.html#cb55-20"></a>models =<span class="st"> </span>((general_model_plot <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;general model&quot;</span>)) <span class="op">/</span><span class="st"> </span></span>
+<span id="cb55-21"><a href="bayes-rule.html#cb55-21"></a><span class="st">  </span>null_plot <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;restricted model&quot;</span>))</span>
+<span id="cb55-22"><a href="bayes-rule.html#cb55-22"></a>                        </span>
+<span id="cb55-23"><a href="bayes-rule.html#cb55-23"></a>p_ranges_y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">ggplot_build</span>(models[[<span class="dv">1</span>]])<span class="op">$</span>layout<span class="op">$</span>panel_scales_y[[<span class="dv">1</span>]]<span class="op">$</span>range<span class="op">$</span>range,</span>
+<span id="cb55-24"><a href="bayes-rule.html#cb55-24"></a>                <span class="kw">ggplot_build</span>(models[[<span class="dv">2</span>]])<span class="op">$</span>layout<span class="op">$</span>panel_scales_y[[<span class="dv">1</span>]]<span class="op">$</span>range<span class="op">$</span>range)</span>
+<span id="cb55-25"><a href="bayes-rule.html#cb55-25"></a>models =<span class="st"> </span><span class="kw">suppressMessages</span>(models  <span class="op">&amp;</span><span class="st"> </span><span class="kw">ylim</span>(<span class="kw">min</span>(p_ranges_y), <span class="kw">max</span>(p_ranges_y)) <span class="op">&amp;</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;prob of outcome&quot;</span>))</span>
+<span id="cb55-26"><a href="bayes-rule.html#cb55-26"></a>                        </span>
+<span id="cb55-27"><a href="bayes-rule.html#cb55-27"></a>                       </span>
+<span id="cb55-28"><a href="bayes-rule.html#cb55-28"></a>((models <span class="op">|</span><span class="st"> </span>(bf_plot <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;difference in prediction&quot;</span>) )) <span class="op">+</span><span class="st"> </span><span class="kw">plot_annotation</span>(<span class="dt">tag_levels =</span> <span class="st">&quot;A&quot;</span>)) <span class="op">&amp;</span></span>
+<span id="cb55-29"><a href="bayes-rule.html#cb55-29"></a><span class="st">                        </span><span class="kw">theme</span>(<span class="dt">title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">14</span>))</span></code></pre></div>
+<p><img src="book_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="bayes-rule.html#cb56-1"></a><span class="co"># 12</span></span>
+<span id="cb56-2"><a href="bayes-rule.html#cb56-2"></a></span>
+<span id="cb56-3"><a href="bayes-rule.html#cb56-3"></a><span class="co"># Give the Bayes factors for different observations </span></span>
+<span id="cb56-4"><a href="bayes-rule.html#cb56-4"></a></span>
+<span id="cb56-5"><a href="bayes-rule.html#cb56-5"></a>marginal_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">full_join</span>(marginal_df_null, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>,<span class="st">&quot;ob&quot;</span>), <span class="dt">suffix =</span> <span class="kw">c</span>(<span class="st">&quot;.general&quot;</span>,<span class="st">&quot;.null&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb56-6"><a href="bayes-rule.html#cb56-6"></a><span class="kw">mutate</span>(<span class="dt">BF10 =</span>  marginal_prob.general <span class="op">/</span><span class="st"> </span>marginal_prob.null, <span class="dt">BF01 =</span> <span class="dv">1</span><span class="op">/</span><span class="st"> </span>BF10, <span class="dt">n =</span> <span class="kw">max</span>(x), </span>
+<span id="cb56-7"><a href="bayes-rule.html#cb56-7"></a><span class="dt">y =</span> glue<span class="op">::</span><span class="kw">glue_col</span>(<span class="st">&quot;{x} in {n}&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb56-8"><a href="bayes-rule.html#cb56-8"></a><span class="kw">select</span>(x,n,y,marginal_prob.general, marginal_prob.null, BF10, BF01) <span class="op">%&gt;%</span></span>
+<span id="cb56-9"><a href="bayes-rule.html#cb56-9"></a><span class="kw">set_colnames</span>(<span class="kw">c</span>(<span class="st">&quot;heads&quot;</span>,<span class="st">&quot;flips&quot;</span>,<span class="st">&quot;$Y$&quot;</span>, <span class="st">&quot;$p(Y|</span><span class="ch">\\</span><span class="st">mathcal{M}_1)$&quot;</span>,</span>
+<span id="cb56-10"><a href="bayes-rule.html#cb56-10"></a><span class="st">&quot;$p(Y|</span><span class="ch">\\</span><span class="st">mathcal{M}_0)$&quot;</span>,<span class="st">&quot;$BF_{10}$&quot;</span>,<span class="st">&quot;$BF_{01}$&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb56-11"><a href="bayes-rule.html#cb56-11"></a>kableExtra<span class="op">::</span><span class="kw">kable_styling</span>(<span class="dt">full_width =</span> T) </span></code></pre></div>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:center;">
+heads
+</th>
+<th style="text-align:center;">
+flips
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(Y\)</span>
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(p(Y|\mathcal{M}_1)\)</span>
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(p(Y|\mathcal{M}_0)\)</span>
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(BF_{10}\)</span>
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(BF_{01}\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+0 in 10
+</td>
+<td style="text-align:center;">
+0.02
+</td>
+<td style="text-align:center;">
+0.00
+</td>
+<td style="text-align:center;">
+22.51
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+1 in 10
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+<td style="text-align:center;">
+5.63
+</td>
+<td style="text-align:center;">
+0.18
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+2 in 10
+</td>
+<td style="text-align:center;">
+0.09
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+2.05
+</td>
+<td style="text-align:center;">
+0.49
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+3 in 10
+</td>
+<td style="text-align:center;">
+0.12
+</td>
+<td style="text-align:center;">
+0.12
+</td>
+<td style="text-align:center;">
+1.02
+</td>
+<td style="text-align:center;">
+0.98
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+4 in 10
+</td>
+<td style="text-align:center;">
+0.14
+</td>
+<td style="text-align:center;">
+0.21
+</td>
+<td style="text-align:center;">
+0.68
+</td>
+<td style="text-align:center;">
+1.47
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+5 in 10
+</td>
+<td style="text-align:center;">
+0.15
+</td>
+<td style="text-align:center;">
+0.25
+</td>
+<td style="text-align:center;">
+0.60
+</td>
+<td style="text-align:center;">
+1.68
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+6 in 10
+</td>
+<td style="text-align:center;">
+0.14
+</td>
+<td style="text-align:center;">
+0.21
+</td>
+<td style="text-align:center;">
+0.68
+</td>
+<td style="text-align:center;">
+1.47
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+7
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+7 in 10
+</td>
+<td style="text-align:center;">
+0.12
+</td>
+<td style="text-align:center;">
+0.12
+</td>
+<td style="text-align:center;">
+1.02
+</td>
+<td style="text-align:center;">
+0.98
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+8 in 10
+</td>
+<td style="text-align:center;">
+0.09
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+<td style="text-align:center;">
+2.05
+</td>
+<td style="text-align:center;">
+0.49
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+9 in 10
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+<td style="text-align:center;">
+5.63
+</td>
+<td style="text-align:center;">
+0.18
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+10 in 10
+</td>
+<td style="text-align:center;">
+0.02
+</td>
+<td style="text-align:center;">
+0.00
+</td>
+<td style="text-align:center;">
+22.51
+</td>
+<td style="text-align:center;">
+0.04
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="the-evidential-alternative-to-p-values.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="choosing-priors-part-i.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["book.pdf", "book.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

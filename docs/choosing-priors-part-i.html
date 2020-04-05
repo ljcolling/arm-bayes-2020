@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Choosing priors Part I | Bayesian Data Analysis</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Choosing priors Part I | Bayesian Data Analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Choosing priors Part I | Bayesian Data Analysis" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Lincoln Colling" />
+
+
+<meta name="date" content="2020-04-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="bayes-rule.html"/>
+<link rel="next" href="computing-bayes-factors-part-i.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bayesian Data Analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prerequisites</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#introduction"><i class="fa fa-check"></i>Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="the-p-value.html"><a href="the-p-value.html"><i class="fa fa-check"></i><b>1</b> The <em>p</em> value</a><ul>
+<li class="chapter" data-level="1.1" data-path="the-p-value.html"><a href="the-p-value.html#probability"><i class="fa fa-check"></i><b>1.1</b> Probability</a></li>
+<li class="chapter" data-level="1.2" data-path="the-p-value.html"><a href="the-p-value.html#probability-and-p-values"><i class="fa fa-check"></i><b>1.2</b> Probability and <em>p</em> values</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="the-p-value.html"><a href="the-p-value.html#understanding-the-p-through-simulation"><i class="fa fa-check"></i><b>1.2.1</b> Understanding the <em>p</em> through simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="the-p-value.html"><a href="the-p-value.html#interim-summary"><i class="fa fa-check"></i><b>1.3</b> Interim summary</a></li>
+<li class="chapter" data-level="1.4" data-path="the-p-value.html"><a href="the-p-value.html#a-short-note-on-confidence-intervals"><i class="fa fa-check"></i><b>1.4</b> A short note on confidence intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="criticisms-of-p-values.html"><a href="criticisms-of-p-values.html"><i class="fa fa-check"></i><b>2</b> Criticisms of <em>p</em> values</a><ul>
+<li class="chapter" data-level="2.1" data-path="criticisms-of-p-values.html"><a href="criticisms-of-p-values.html#same-measurements-from-different-devices"><i class="fa fa-check"></i><b>2.1</b> Same measurements from different devices</a></li>
+<li class="chapter" data-level="2.2" data-path="criticisms-of-p-values.html"><a href="criticisms-of-p-values.html#the-universe-of-possible-events"><i class="fa fa-check"></i><b>2.2</b> The universe of possible events</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="the-evidential-alternative-to-p-values.html"><a href="the-evidential-alternative-to-p-values.html"><i class="fa fa-check"></i><b>3</b> The evidential alternative to <em>p</em> values</a><ul>
+<li class="chapter" data-level="3.1" data-path="the-evidential-alternative-to-p-values.html"><a href="the-evidential-alternative-to-p-values.html#a-theory-of-statistical-evidence"><i class="fa fa-check"></i><b>3.1</b> A theory of statistical evidence</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="the-evidential-alternative-to-p-values.html"><a href="the-evidential-alternative-to-p-values.html#some-features-of-likelihoods"><i class="fa fa-check"></i><b>3.1.1</b> Some features of likelihoods</a></li>
+<li class="chapter" data-level="3.1.2" data-path="the-evidential-alternative-to-p-values.html"><a href="the-evidential-alternative-to-p-values.html#likelihoods-and-statistical-evidence"><i class="fa fa-check"></i><b>3.1.2</b> Likelihoods and statistical evidence</a></li>
+<li class="chapter" data-level="3.1.3" data-path="the-evidential-alternative-to-p-values.html"><a href="the-evidential-alternative-to-p-values.html#are-all-sub-hypotheses-equal"><i class="fa fa-check"></i><b>3.1.3</b> Are all sub-hypotheses equal?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bayes-rule.html"><a href="bayes-rule.html"><i class="fa fa-check"></i><b>4</b> Bayes rule</a><ul>
+<li class="chapter" data-level="4.1" data-path="bayes-rule.html"><a href="bayes-rule.html#what-is-bayes-rule"><i class="fa fa-check"></i><b>4.1</b> What is Bayes rule</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="bayes-rule.html"><a href="bayes-rule.html#conditional-probability-form"><i class="fa fa-check"></i><b>4.1.1</b> Conditional probability form</a></li>
+<li class="chapter" data-level="4.1.2" data-path="bayes-rule.html"><a href="bayes-rule.html#proportional-form"><i class="fa fa-check"></i><b>4.1.2</b> Proportional form</a></li>
+<li class="chapter" data-level="4.1.3" data-path="bayes-rule.html"><a href="bayes-rule.html#ratio-form"><i class="fa fa-check"></i><b>4.1.3</b> Ratio form</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="bayes-rule.html"><a href="bayes-rule.html#bayes-factor"><i class="fa fa-check"></i><b>4.2</b> Bayes factor</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="choosing-priors-part-i.html"><a href="choosing-priors-part-i.html"><i class="fa fa-check"></i><b>5</b> Choosing priors Part I</a><ul>
+<li class="chapter" data-level="5.1" data-path="choosing-priors-part-i.html"><a href="choosing-priors-part-i.html#priors-with-specific-mathematical-properties"><i class="fa fa-check"></i><b>5.1</b> Priors with specific mathematical properties</a></li>
+<li class="chapter" data-level="5.2" data-path="choosing-priors-part-i.html"><a href="choosing-priors-part-i.html#priors-that-reflect-ignorance"><i class="fa fa-check"></i><b>5.2</b> Priors that reflect ignorance</a></li>
+<li class="chapter" data-level="5.3" data-path="choosing-priors-part-i.html"><a href="choosing-priors-part-i.html#priors-that-reflect-our-beliefs-about-the-world."><i class="fa fa-check"></i><b>5.3</b> Priors that reflect our beliefs about the world.</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="computing-bayes-factors-part-i.html"><a href="computing-bayes-factors-part-i.html"><i class="fa fa-check"></i><b>6</b> Computing Bayes factors Part I</a><ul>
+<li class="chapter" data-level="6.1" data-path="computing-bayes-factors-part-i.html"><a href="computing-bayes-factors-part-i.html#priors-on-effect-sizes"><i class="fa fa-check"></i><b>6.1</b> Priors on effect sizes</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="computing-bayes-factors-part-ii.html"><a href="computing-bayes-factors-part-ii.html"><i class="fa fa-check"></i><b>7</b> Computing Bayes factors Part II</a><ul>
+<li class="chapter" data-level="7.1" data-path="computing-bayes-factors-part-ii.html"><a href="computing-bayes-factors-part-ii.html#priors-on-raw-effects"><i class="fa fa-check"></i><b>7.1</b> Priors on raw effects</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/ljcolling/notebooks" target="blank">View on GitHub</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian Data Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="choosing-priors-part-i" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Choosing priors Part I</h1>
+<p>We’re going to cover priors in two parts. In this part, we’re going to cover some general implications of different prior choices and we’re going to talk about priors specifically in the context of Bayes factor. In Part II, we cover prior choice in the context of <strong>Bayesian estimation</strong>. The reasons for making particular choices and the implications of our choices in these two contexts are a little different, so it’s best to deal with them separately.</p>
+<div id="priors-with-specific-mathematical-properties" class="section level2">
+<h2><span class="header-section-number">5.1</span> Priors with specific mathematical properties</h2>
+<p>The first prior choice strategy we’ll cover is choosing priors that have particular mathematical properties. One property we might be interested in is choosing priors that are from the same <strong>family</strong> as the posterior. When we do this, the prior is known as a <strong>conjugate prior</strong>.</p>
+<p>Ordinarily there aren’t <strong>closed form</strong> solutions for calculating posteriors. However, the beauty of using a <strong>conjugate prior</strong> is that this allows us to derive a closed form solution for the posterior. One example of a <em>conjugate prior</em> is the <strong>Beta</strong> distribution, which is a conjugate prior when we have a <strong>Binomial</strong> or <strong>Negative binomial</strong> likelihood (like our coin flip example). The resulting posterior would then take the form of a <strong>Beta</strong> distribution.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="choosing-priors-part-i.html#cb57-1"></a><span class="co"># 1</span></span>
+<span id="cb57-2"><a href="choosing-priors-part-i.html#cb57-2"></a></span>
+<span id="cb57-3"><a href="choosing-priors-part-i.html#cb57-3"></a><span class="co"># Set the observation</span></span>
+<span id="cb57-4"><a href="choosing-priors-part-i.html#cb57-4"></a><span class="co"># This takes two parameters</span></span>
+<span id="cb57-5"><a href="choosing-priors-part-i.html#cb57-5"></a><span class="co"># X: The number of heads</span></span>
+<span id="cb57-6"><a href="choosing-priors-part-i.html#cb57-6"></a><span class="co"># N: The number of flips</span></span>
+<span id="cb57-7"><a href="choosing-priors-part-i.html#cb57-7"></a>X =<span class="st"> </span><span class="dv">5</span></span>
+<span id="cb57-8"><a href="choosing-priors-part-i.html#cb57-8"></a>N =<span class="st"> </span><span class="dv">12</span></span>
+<span id="cb57-9"><a href="choosing-priors-part-i.html#cb57-9"></a></span>
+<span id="cb57-10"><a href="choosing-priors-part-i.html#cb57-10"></a><span class="co"># set the prior</span></span>
+<span id="cb57-11"><a href="choosing-priors-part-i.html#cb57-11"></a><span class="co"># We&#39;ll use a Beta distribution as our prior</span></span>
+<span id="cb57-12"><a href="choosing-priors-part-i.html#cb57-12"></a><span class="co"># The beta distribution takes two parameters (α [alpha_prior] and β [beta_prior])</span></span>
+<span id="cb57-13"><a href="choosing-priors-part-i.html#cb57-13"></a>alpha_prior =<span class="st"> </span><span class="dv">10</span></span>
+<span id="cb57-14"><a href="choosing-priors-part-i.html#cb57-14"></a>beta_prior =<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb57-15"><a href="choosing-priors-part-i.html#cb57-15"></a></span>
+<span id="cb57-16"><a href="choosing-priors-part-i.html#cb57-16"></a></span>
+<span id="cb57-17"><a href="choosing-priors-part-i.html#cb57-17"></a></span>
+<span id="cb57-18"><a href="choosing-priors-part-i.html#cb57-18"></a></span>
+<span id="cb57-19"><a href="choosing-priors-part-i.html#cb57-19"></a><span class="co"># define a function for the likelihood</span></span>
+<span id="cb57-20"><a href="choosing-priors-part-i.html#cb57-20"></a>like_func =<span class="st"> </span><span class="cf">function</span>(theta, x,n){</span>
+<span id="cb57-21"><a href="choosing-priors-part-i.html#cb57-21"></a>    <span class="kw">dbinom</span>(<span class="dt">x =</span> x, <span class="dt">size =</span> n, <span class="dt">prob =</span> theta)}</span>
+<span id="cb57-22"><a href="choosing-priors-part-i.html#cb57-22"></a></span>
+<span id="cb57-23"><a href="choosing-priors-part-i.html#cb57-23"></a><span class="co"># create a tibble to hold the plot data</span></span>
+<span id="cb57-24"><a href="choosing-priors-part-i.html#cb57-24"></a>like_df =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">theta =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">0001</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb57-25"><a href="choosing-priors-part-i.html#cb57-25"></a><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">map_dbl</span>(theta, <span class="cf">function</span>(x) <span class="kw">like_func</span>(<span class="dt">theta =</span> x, X, N)))   </span>
+<span id="cb57-26"><a href="choosing-priors-part-i.html#cb57-26"></a>                         </span>
+<span id="cb57-27"><a href="choosing-priors-part-i.html#cb57-27"></a></span>
+<span id="cb57-28"><a href="choosing-priors-part-i.html#cb57-28"></a><span class="co"># define a function for the prior</span></span>
+<span id="cb57-29"><a href="choosing-priors-part-i.html#cb57-29"></a>prior_func =<span class="st"> </span><span class="cf">function</span>(theta, alpha_prior,beta_prior){</span>
+<span id="cb57-30"><a href="choosing-priors-part-i.html#cb57-30"></a>    <span class="kw">dbeta</span>(<span class="dt">x =</span> theta, <span class="dt">shape1 =</span> alpha_prior, <span class="dt">shape2 =</span> beta_prior)}</span>
+<span id="cb57-31"><a href="choosing-priors-part-i.html#cb57-31"></a></span>
+<span id="cb57-32"><a href="choosing-priors-part-i.html#cb57-32"></a><span class="co"># create a tibble to hold the plot data</span></span>
+<span id="cb57-33"><a href="choosing-priors-part-i.html#cb57-33"></a>prior_df =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">theta =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">0001</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb57-34"><a href="choosing-priors-part-i.html#cb57-34"></a><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">map_dbl</span>(theta, <span class="cf">function</span>(x) <span class="kw">prior_func</span>(<span class="dt">theta =</span> x, alpha_prior, beta_prior))) </span>
+<span id="cb57-35"><a href="choosing-priors-part-i.html#cb57-35"></a></span>
+<span id="cb57-36"><a href="choosing-priors-part-i.html#cb57-36"></a>                         </span>
+<span id="cb57-37"><a href="choosing-priors-part-i.html#cb57-37"></a><span class="co"># define a function for the posterior</span></span>
+<span id="cb57-38"><a href="choosing-priors-part-i.html#cb57-38"></a>posterior_func =<span class="st"> </span><span class="cf">function</span>(theta, X, N, alpha_prior, beta_prior){</span>
+<span id="cb57-39"><a href="choosing-priors-part-i.html#cb57-39"></a>    <span class="kw">dbeta</span>(<span class="dt">x =</span> theta, <span class="dt">shape1 =</span> alpha_prior <span class="op">+</span><span class="st"> </span>X, <span class="dt">shape2 =</span> beta_prior <span class="op">+</span><span class="st"> </span>N <span class="op">-</span><span class="st"> </span>X)</span>
+<span id="cb57-40"><a href="choosing-priors-part-i.html#cb57-40"></a>}</span>
+<span id="cb57-41"><a href="choosing-priors-part-i.html#cb57-41"></a></span>
+<span id="cb57-42"><a href="choosing-priors-part-i.html#cb57-42"></a></span>
+<span id="cb57-43"><a href="choosing-priors-part-i.html#cb57-43"></a><span class="co"># create a tibble to hold the plot data</span></span>
+<span id="cb57-44"><a href="choosing-priors-part-i.html#cb57-44"></a>posterior_df =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">theta =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">0001</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb57-45"><a href="choosing-priors-part-i.html#cb57-45"></a><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">map_dbl</span>(theta, <span class="cf">function</span>(x) <span class="kw">posterior_func</span>(<span class="dt">theta =</span> x, X, N, alpha_prior, beta_prior)))</span>
+<span id="cb57-46"><a href="choosing-priors-part-i.html#cb57-46"></a></span>
+<span id="cb57-47"><a href="choosing-priors-part-i.html#cb57-47"></a>                       </span>
+<span id="cb57-48"><a href="choosing-priors-part-i.html#cb57-48"></a>like_df<span class="op">$</span>density =<span class="st"> </span>like_df<span class="op">$</span>density <span class="op">*</span><span class="st"> </span>(<span class="kw">max</span>(prior_df<span class="op">$</span>density)<span class="op">/</span><span class="kw">max</span>(like_df<span class="op">$</span>density))</span>
+<span id="cb57-49"><a href="choosing-priors-part-i.html#cb57-49"></a>                         </span>
+<span id="cb57-50"><a href="choosing-priors-part-i.html#cb57-50"></a>                         </span>
+<span id="cb57-51"><a href="choosing-priors-part-i.html#cb57-51"></a>                         </span>
+<span id="cb57-52"><a href="choosing-priors-part-i.html#cb57-52"></a>combined_df =<span class="st"> </span>prior_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">full_join</span>(posterior_df, <span class="dt">by =</span> <span class="st">&quot;theta&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">full_join</span>(like_df, <span class="dt">by =</span> <span class="st">&quot;theta&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb57-53"><a href="choosing-priors-part-i.html#cb57-53"></a><span class="kw">set_colnames</span>(<span class="kw">c</span>(<span class="st">&quot;theta&quot;</span>,<span class="st">&quot;prior&quot;</span>,<span class="st">&quot;posterior&quot;</span>,<span class="st">&quot;likelihood&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb57-54"><a href="choosing-priors-part-i.html#cb57-54"></a><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">c</span>(<span class="st">&quot;prior&quot;</span>,<span class="st">&quot;posterior&quot;</span>,<span class="st">&quot;likelihood&quot;</span>), <span class="dt">names_to =</span> <span class="st">&quot;type&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;density&quot;</span>)</span>
+<span id="cb57-55"><a href="choosing-priors-part-i.html#cb57-55"></a></span>
+<span id="cb57-56"><a href="choosing-priors-part-i.html#cb57-56"></a></span>
+<span id="cb57-57"><a href="choosing-priors-part-i.html#cb57-57"></a><span class="kw">ggplot</span>(combined_df, <span class="kw">aes</span>(<span class="dt">x =</span> theta, <span class="dt">y =</span> density, <span class="dt">colour =</span> type, <span class="dt">linetype =</span> type)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">na.rm =</span> T) <span class="op">+</span></span>
+<span id="cb57-58"><a href="choosing-priors-part-i.html#cb57-58"></a><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">posterior =</span> <span class="st">&quot;seagreen&quot;</span>, <span class="dt">prior  =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">likelihood =</span> <span class="st">&quot;red&quot;</span>), </span>
+<span id="cb57-59"><a href="choosing-priors-part-i.html#cb57-59"></a>                   <span class="dt">name =</span> <span class="ot">NULL</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb57-60"><a href="choosing-priors-part-i.html#cb57-60"></a><span class="kw">scale_linetype</span>(<span class="dt">guide =</span> <span class="st">&quot;none&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="ot">NULL</span>, <span class="dt">labels =</span> <span class="ot">NULL</span>) <span class="op">+</span></span>
+<span id="cb57-61"><a href="choosing-priors-part-i.html#cb57-61"></a><span class="kw">scale_x_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;θ&quot;</span>, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">2</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>(<span class="dv">12</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span></code></pre></div>
+<p><img src="book_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+</div>
+<div id="priors-that-reflect-ignorance" class="section level2">
+<h2><span class="header-section-number">5.2</span> Priors that reflect ignorance</h2>
+<p>The next thing that we might want to take into account when choosing a prior is choosing a prior that doesn’t commit us to any particular value of the parameter. But doing this might not be as straightforward as it initially seems. We might think that we can just weight each possible value of the parameter equally. However, it turns out that this isn’t always the best strategy. To see why, we’ll turn to an example.</p>
+<p>For our coin flipping example we can calculate the maximum likelihood estimate for the coin bias given our data. The formula for this is given as:</p>
+<p><span class="math display">\[\hat{\theta}_{\mathrm{mle}}=\frac{x}{n},\]</span></p>
+<p>where <span class="math inline">\(x\)</span> is the number of heads in <span class="math inline">\(n\)</span> flips. This value is the same as the <strong>mean</strong> of our likelihood. We can think of this as our estimate of the parameter without taking account any prior information.</p>
+<p>Next we can incorporate a prior and calculate a posterior. We’ll use a <strong>Beta</strong> prior, because it’ll allow us to easily calculate the posterior. For a prior of the form <span class="math inline">\(Beta(\alpha,\beta)\)</span>, the posterior for <span class="math inline">\(x\)</span> heads in <span class="math inline">\(n\)</span> flips is given as <span class="math inline">\(Beta(\alpha + x,\beta + n -x)\)</span>. From this, we can now work out the <strong>mean of the posterior</strong> as:</p>
+<p><span class="math display">\[\hat{\theta}_{\mathrm{bayes}}=\frac{\alpha + x}{\alpha + \beta + n}.\]</span></p>
+<p>From this we can see that for any value of <span class="math inline">\(\alpha &gt; 0 &lt; \beta\)</span> the value of <span class="math inline">\(\hat{\theta}_{\mathrm{bayes}}\)</span> and <span class="math inline">\(\hat{\theta}_{\mathrm{mle}}\)</span> will be different.</p>
+<p>This results in a rather unintuitive conclusion. The uniform prior <span class="math inline">\(Beta(1,1)\)</span> has a bigger influence (is in a sense more informative) than the prior <span class="math inline">\(Beta(0,0)\)</span> (this prior is called Haldane’s prior). Technically, <span class="math inline">\(Beta(0,0)\)</span> is undefined, but we can examine the prior <span class="math inline">\(Beta(\epsilon,\epsilon)\)</span>, where <span class="math inline">\(\epsilon\)</span> is an arbitrarily small number.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="choosing-priors-part-i.html#cb58-1"></a><span class="co"># 2</span></span>
+<span id="cb58-2"><a href="choosing-priors-part-i.html#cb58-2"></a></span>
+<span id="cb58-3"><a href="choosing-priors-part-i.html#cb58-3"></a><span class="co"># Set the observation</span></span>
+<span id="cb58-4"><a href="choosing-priors-part-i.html#cb58-4"></a><span class="co"># This takes two parameters</span></span>
+<span id="cb58-5"><a href="choosing-priors-part-i.html#cb58-5"></a><span class="co"># X: The number of heads</span></span>
+<span id="cb58-6"><a href="choosing-priors-part-i.html#cb58-6"></a><span class="co"># N: The number of flips</span></span>
+<span id="cb58-7"><a href="choosing-priors-part-i.html#cb58-7"></a>X =<span class="st"> </span><span class="dv">5</span></span>
+<span id="cb58-8"><a href="choosing-priors-part-i.html#cb58-8"></a>N =<span class="st"> </span><span class="dv">12</span></span>
+<span id="cb58-9"><a href="choosing-priors-part-i.html#cb58-9"></a></span>
+<span id="cb58-10"><a href="choosing-priors-part-i.html#cb58-10"></a><span class="co"># set the prior</span></span>
+<span id="cb58-11"><a href="choosing-priors-part-i.html#cb58-11"></a><span class="co"># We&#39;ll use a Beta distribution as our prior</span></span>
+<span id="cb58-12"><a href="choosing-priors-part-i.html#cb58-12"></a><span class="co"># The beta distribution takes two parameters (α [alpha_prior] and β [beta_prior])</span></span>
+<span id="cb58-13"><a href="choosing-priors-part-i.html#cb58-13"></a>alpha_prior =<span class="st"> </span><span class="fl">0.01</span></span>
+<span id="cb58-14"><a href="choosing-priors-part-i.html#cb58-14"></a>beta_prior =<span class="st">  </span><span class="fl">0.01</span></span>
+<span id="cb58-15"><a href="choosing-priors-part-i.html#cb58-15"></a></span>
+<span id="cb58-16"><a href="choosing-priors-part-i.html#cb58-16"></a><span class="kw">glue</span>(<span class="st">&quot;The mean of the likelihood is {round(X/N,2)}   </span></span>
+<span id="cb58-17"><a href="choosing-priors-part-i.html#cb58-17"></a><span class="st">The mean of the posterior is {round((alpha_prior + X)/(alpha_prior + beta_prior + N),2)}&quot;</span>) </span></code></pre></div>
+<p>The mean of the likelihood is 0.42<br />
+The mean of the posterior is 0.42</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="choosing-priors-part-i.html#cb59-1"></a><span class="kw">tibble</span>(<span class="dt">theta =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">0001</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb59-2"><a href="choosing-priors-part-i.html#cb59-2"></a><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">map_dbl</span>(theta, <span class="cf">function</span>(x) <span class="kw">prior_func</span>(<span class="dt">theta =</span> x, alpha_prior, beta_prior))) <span class="op">%&gt;%</span></span>
+<span id="cb59-3"><a href="choosing-priors-part-i.html#cb59-3"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> theta, <span class="dt">y =</span> density)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb59-4"><a href="choosing-priors-part-i.html#cb59-4"></a><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="ot">NULL</span>, <span class="dt">labels =</span> <span class="ot">NULL</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;θ&quot;</span>, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">2</span>))  <span class="op">+</span></span>
+<span id="cb59-5"><a href="choosing-priors-part-i.html#cb59-5"></a><span class="kw">theme_minimal</span>(<span class="dv">12</span>)</span></code></pre></div>
+<p><img src="book_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+<p>From the plot we can see that this prior splits nearly all of it’s weight on the extreme of <span class="math inline">\(\theta\)</span> = 0 and <span class="math inline">\(\theta\)</span> = 1. In short, a prior that seems to make the least commitments has a bigger influence than the prior that seemingly makes the strongest commitments.</p>
+<p>If we think about it, we’ll also see that a prior like this makes a lot of sense if we want to <em>quantify</em> our uncertainty. To understand this, lets plot the likelihood functions for various observations. We’ll pick two extreme observations (1 head in 100 flips and 99 heads in 100 flips) and one middle of the road observation (50 heads in 100 flips). The plots will allow us to see the range of plausible values for the coin bias given the observation.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="choosing-priors-part-i.html#cb60-1"></a><span class="co"># 3</span></span>
+<span id="cb60-2"><a href="choosing-priors-part-i.html#cb60-2"></a></span>
+<span id="cb60-3"><a href="choosing-priors-part-i.html#cb60-3"></a>like_options =<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">100</span>),</span>
+<span id="cb60-4"><a href="choosing-priors-part-i.html#cb60-4"></a>                   <span class="kw">c</span>(<span class="dv">99</span>,<span class="dv">100</span>),</span>
+<span id="cb60-5"><a href="choosing-priors-part-i.html#cb60-5"></a>                   <span class="kw">c</span>(<span class="dv">50</span>,<span class="dv">100</span>))</span>
+<span id="cb60-6"><a href="choosing-priors-part-i.html#cb60-6"></a></span>
+<span id="cb60-7"><a href="choosing-priors-part-i.html#cb60-7"></a><span class="kw">list</span>(<span class="kw">tibble</span>(<span class="dt">theta =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">0001</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb60-8"><a href="choosing-priors-part-i.html#cb60-8"></a><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">map_dbl</span>(theta, <span class="cf">function</span>(t) <span class="kw">like_func</span>(<span class="dt">theta =</span> t, like_options[[<span class="dv">1</span>]][<span class="dv">1</span>], </span>
+<span id="cb60-9"><a href="choosing-priors-part-i.html#cb60-9"></a>                                                      <span class="dt">n =</span> like_options[[<span class="dv">1</span>]][<span class="dv">2</span>])), </span>
+<span id="cb60-10"><a href="choosing-priors-part-i.html#cb60-10"></a>                                                      <span class="dt">x =</span> like_options[[<span class="dv">1</span>]][<span class="dv">1</span>], </span>
+<span id="cb60-11"><a href="choosing-priors-part-i.html#cb60-11"></a>                                                      <span class="dt">n =</span> like_options[[<span class="dv">1</span>]][<span class="dv">2</span>]),</span>
+<span id="cb60-12"><a href="choosing-priors-part-i.html#cb60-12"></a>                         </span>
+<span id="cb60-13"><a href="choosing-priors-part-i.html#cb60-13"></a><span class="kw">tibble</span>(<span class="dt">theta =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">0001</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb60-14"><a href="choosing-priors-part-i.html#cb60-14"></a><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">map_dbl</span>(theta, <span class="cf">function</span>(t) <span class="kw">like_func</span>(<span class="dt">theta =</span> t, like_options[[<span class="dv">2</span>]][<span class="dv">1</span>], </span>
+<span id="cb60-15"><a href="choosing-priors-part-i.html#cb60-15"></a>                                                      <span class="dt">n =</span> like_options[[<span class="dv">2</span>]][<span class="dv">2</span>])), </span>
+<span id="cb60-16"><a href="choosing-priors-part-i.html#cb60-16"></a>                                                      <span class="dt">x =</span> like_options[[<span class="dv">2</span>]][<span class="dv">1</span>], </span>
+<span id="cb60-17"><a href="choosing-priors-part-i.html#cb60-17"></a>                                                      <span class="dt">n =</span> like_options[[<span class="dv">2</span>]][<span class="dv">2</span>]),</span>
+<span id="cb60-18"><a href="choosing-priors-part-i.html#cb60-18"></a>                         </span>
+<span id="cb60-19"><a href="choosing-priors-part-i.html#cb60-19"></a><span class="kw">tibble</span>(<span class="dt">theta =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">0001</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb60-20"><a href="choosing-priors-part-i.html#cb60-20"></a><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">map_dbl</span>(theta, <span class="cf">function</span>(t) <span class="kw">like_func</span>(<span class="dt">theta =</span> t, like_options[[<span class="dv">3</span>]][<span class="dv">1</span>], </span>
+<span id="cb60-21"><a href="choosing-priors-part-i.html#cb60-21"></a>                                                      <span class="dt">n =</span> like_options[[<span class="dv">3</span>]][<span class="dv">2</span>])), </span>
+<span id="cb60-22"><a href="choosing-priors-part-i.html#cb60-22"></a>                                                      <span class="dt">x =</span> like_options[[<span class="dv">3</span>]][<span class="dv">1</span>], </span>
+<span id="cb60-23"><a href="choosing-priors-part-i.html#cb60-23"></a>                                                      <span class="dt">n =</span> like_options[[<span class="dv">3</span>]][<span class="dv">2</span>]))  <span class="op">%&gt;%</span></span>
+<span id="cb60-24"><a href="choosing-priors-part-i.html#cb60-24"></a><span class="kw">map</span>(<span class="cf">function</span>(x) <span class="kw">ggplot</span>(<span class="dt">data =</span> x, <span class="kw">aes</span>(<span class="dt">x =</span> theta, <span class="dt">y =</span> density)) <span class="op">+</span></span>
+<span id="cb60-25"><a href="choosing-priors-part-i.html#cb60-25"></a><span class="st">    </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">glue</span>(<span class="st">&quot;Likelihood for {x$x} heads in {x$n} flips&quot;</span>)) <span class="op">+</span></span>
+<span id="cb60-26"><a href="choosing-priors-part-i.html#cb60-26"></a><span class="st">   </span><span class="kw">theme_minimal</span>(<span class="dv">16</span>) <span class="op">+</span><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;θ&quot;</span>, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">2</span>)) <span class="op">+</span></span>
+<span id="cb60-27"><a href="choosing-priors-part-i.html#cb60-27"></a><span class="st">   </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="ot">NULL</span>, <span class="dt">labels =</span> <span class="ot">NULL</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb60-28"><a href="choosing-priors-part-i.html#cb60-28"></a><span class="st">       </span>patchwork<span class="op">::</span><span class="kw">wrap_plots</span>(<span class="dt">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="book_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p>Comparing the plots for the extreme observations to the plot for the middling one we can see that there’s a larger range of plausible values of the bias when the observation is somewhere near the middle of the range. When the observation is at the extreme there’s only a very narrow range of values of the bias that could plausibly produce the observation. In a sense, we’re less uncertain about the extremes and more uncertain in the middle. Quantifying this uncertainty means putting more prior mass at the extremes (where we’re certain) and less in the middle (where more uncertain about the relation between parameters and observations).</p>
+<p>There’s also another hurdle to coming up with a prior that is “uninformative”, and this has to do with how we parametrise problems. Let’s say that I’m interested in computing a posterior estimate about the probability <span class="math inline">\(\pi\)</span> of a coin landing heads. I use a uniform prior so that for any value of <span class="math inline">\(\theta_n\)</span>, <span class="math inline">\(p(\theta_1)=p(\theta_2)\)</span>. After working out my posterior I give you the estimate. You, however, are not interested in the probability <span class="math inline">\(\pi\)</span>. Instead, you’re interested in the log odds <span class="math inline">\(\phi\)</span>, so you transform <span class="math inline">\(\pi\)</span> into <span class="math inline">\(\phi\)</span> using <span class="math inline">\(\phi=\mathrm{log}\frac{\pi}{1-\pi}\)</span>.</p>
+<p>Now let’s say another another statistician is analysing the same data, but they’ve decided to work in <span class="math inline">\(\phi\)</span> space from the get go. So to analyse the data, they first convert it into <span class="math inline">\(\phi\)</span>, construct a prior so that for any <span class="math inline">\(\theta_n\)</span>, <span class="math inline">\(p(\theta_1)=p(\theta_2)\)</span>. They then take the data, and the prior, to compute the posterior.</p>
+<p>It turns out that when this is done, the two estimates—the one converted from <span class="math inline">\(\pi\)</span> to <span class="math inline">\(\phi\)</span> and the done wholly in <span class="math inline">\(\phi\)</span> won’t agree. That is because what is uniform for the one isn’t uniform for the other. So which way of asking the question is the right one? Do you ask about <span class="math inline">\(\pi\)</span> or <span class="math inline">\(\phi\)</span>? The answer is that there is, and there shouldn’t, be a right way to ask the question. If the parameters are equivalent (there’s a one to one translation from one to the other) and to use a non-informative prior then your choice of parameterisation shouldn’t inform your posterior. There is, however, a way to construct prior that will allow you to get the same answer for the two questions. This is by using <strong>Jeffreys’ rules</strong>. The resulting prior is often called a <strong>Jeffreys’ prior</strong>. For our coin flipping example, the prior constructed from the parameter space of the probability of show heads turns out to be <span class="math inline">\(Beta(\frac{1}{2},\frac{1}{2})\)</span>.</p>
+<p>This property of Jeffreys’ priors is certainly useful. However, there’s no free lunch in statistics, and using Jeffreys’ priors involves a cost. The cost is that to construct a <strong>Jeffreys’</strong> prior you need to take into account the <strong>universe of possible results</strong>. That is, the method of constructing Jeffrey’s priors takes into account data that only might occur. As a consequence, the Jeffreys prior for our two coin flipping example—flipping for 10 flips and flipping until 2 tails—will be different. The Jeffreys prior for <span class="math inline">\(n\)</span> flips is <span class="math inline">\(Beta(\frac{1}{2},\frac{1}{2}\)</span>). While the prior for the flipping until <span class="math inline">\(x\)</span> tails is <span class="math inline">\(Beta(1,\frac{1}{2})\)</span>.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="choosing-priors-part-i.html#cb61-1"></a>jeffrey1 =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">theta =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">001</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb61-2"><a href="choosing-priors-part-i.html#cb61-2"></a><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">map_dbl</span>(theta, <span class="cf">function</span>(x) <span class="kw">prior_func</span>(<span class="dt">theta =</span> x, <span class="fl">.5</span>, <span class="fl">.5</span>))) <span class="op">%&gt;%</span></span>
+<span id="cb61-3"><a href="choosing-priors-part-i.html#cb61-3"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> theta, <span class="dt">y =</span> density)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb61-4"><a href="choosing-priors-part-i.html#cb61-4"></a><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;p(θ)&quot;</span>, <span class="dt">labels =</span> <span class="ot">NULL</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;θ&quot;</span>, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">2</span>))  <span class="op">+</span></span>
+<span id="cb61-5"><a href="choosing-priors-part-i.html#cb61-5"></a><span class="kw">theme_minimal</span>(<span class="dv">12</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Jeffreys prior for binomial&quot;</span>)</span>
+<span id="cb61-6"><a href="choosing-priors-part-i.html#cb61-6"></a>                         </span>
+<span id="cb61-7"><a href="choosing-priors-part-i.html#cb61-7"></a>jeffrey2 =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">theta =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">001</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb61-8"><a href="choosing-priors-part-i.html#cb61-8"></a><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">map_dbl</span>(theta, <span class="cf">function</span>(x) <span class="kw">prior_func</span>(<span class="dt">theta =</span> x, <span class="dv">1</span>, <span class="fl">.5</span>))) <span class="op">%&gt;%</span></span>
+<span id="cb61-9"><a href="choosing-priors-part-i.html#cb61-9"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> theta, <span class="dt">y =</span> density)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb61-10"><a href="choosing-priors-part-i.html#cb61-10"></a><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;p(θ)&quot;</span>, <span class="dt">labels =</span> <span class="ot">NULL</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;θ&quot;</span>, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">2</span>))  <span class="op">+</span></span>
+<span id="cb61-11"><a href="choosing-priors-part-i.html#cb61-11"></a><span class="kw">theme_minimal</span>(<span class="dv">12</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Jeffreys prior for negative binomial&quot;</span>)</span>
+<span id="cb61-12"><a href="choosing-priors-part-i.html#cb61-12"></a>                         </span>
+<span id="cb61-13"><a href="choosing-priors-part-i.html#cb61-13"></a>jeffrey1 <span class="op">/</span><span class="st"> </span>jeffrey2</span></code></pre></div>
+<p><img src="book_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+</div>
+<div id="priors-that-reflect-our-beliefs-about-the-world." class="section level2">
+<h2><span class="header-section-number">5.3</span> Priors that reflect our beliefs about the world.</h2>
+<p>Finally, you can choose priors that reflect your beliefs about the world. In the coin flipping example, this would involve picking a prior that reflects what you <strong>believe</strong> about fair and biased coins: Do biased coins show heads more often, tails more often, extreme values more often, and so on. When we’re using <strong>Bayes factors</strong> in experimental psychology, this would me picking priors that describe our scientific theories—that is, picking <strong>priors</strong> that makes predictions about data that are consistent with the predictions about data that our theories make.</p>
+<p>Do this is hard, but we’ll cover some strategies when we get to actually computing <strong>Bayes factors</strong> for some problems. But it’s also important to remember that you don’t need to restrict yourself to one model. You can have many models and you can see how changes in your model change your inferences. This is sometimes captured by the idea of <em>robustness regions</em>. However, it’s also important to note that if different <strong>reasonable</strong> priors lead to different conclusions then there might not be <strong>one answer</strong> to your problem. That is, it important to recognise that uncertainty in the nature of your models can lead to uncertainty in your conclusions.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="bayes-rule.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="computing-bayes-factors-part-i.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["book.pdf", "book.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
